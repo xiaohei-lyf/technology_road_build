@@ -1,0 +1,1 @@
+在dataDir 新建myid 文件，并且填入 server 序号 eg：server1 填 1
