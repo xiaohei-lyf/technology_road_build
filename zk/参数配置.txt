@@ -1,0 +1,56 @@
+conf 配置文件
+
+	tickTime ： zk中所有的的时间以这个为基础，比如 session配置 2 =》 表示 session过两个 tickTime 发送心跳否则超时
+	clientPort：客户端端口号，对外提供服务
+	dataLogDir：事务日志 ，只有写会产生日志，zk会记录日志后才返回成功，所以这个可以挂载到单独磁盘（优化重点）
+	
+	dataDir：存储的快照文件目录，也是一个磁盘优化的点 org.apache.zookeeper.server.ZKDatabase进行加载，
+	preAllocSize：每次快照的大小k为单位，
+	
+	
+	globalOutstandingLimit：限制链接数
+	traceFile: 每个请求会记录在日志但是会带来性能问题，记录在traceFile.year.month.day
+	maxClientCnxns：最大的socket连接数默认60
+	clientPortAddress：对特定的ip进行服务
+	minSessionTimeout：允许的最小超时时间，默认 2*tickTime
+	maxSessionTimeout：默认 20* tickTime
+	autopurge.snapRetainCount：设置 过期日志 不被zk 清理线程清理掉
+	autopurge.purgeInterval：清理间隔单位 hours（org.apache.zookeeper.server.DatadirCleanupManager的105行）
+	snapCount：当内存的日志达到 snapCount/2+Random.nextInt(snapCount/2)时，将会对zkDatabase内存数据进行序列化固话到磁盘
+	electionAlg：选举使用的方式，选举算法,默认为3，可以选择(0,1,2,3),    0表示使用原生的UDP(LeaderElection),（org.apache.zookeeper.server.quorum.QuorumPeer 159行）
+	initLimit：leader和learner socket read（）所阻塞的时间 （org.apache.zookeeper.server.quorum.LearnerHandler第297行）
+	SyncLimit：leader和learner socket read（）所阻塞的时间，包括数据同步+数据提交（222行connectToLeader()，316行syncWithLeader()）
+	skipACL：跳过ACL 检查
+	forceSync：是否对正在操作的事务写入日志，关闭会丢失还没持久化日志
+	
+节点参数说明：
+		czxid	znode创建时的zxid
+mzxid	znode的数据最后更新的zxid
+ctime	此节点创建时来自epoch的time毫秒数
+mtime	znode最后更新的毫秒数,来自epoch
+version	znode数据更新的版本号
+cversion	znode子节点变更的版本号
+aclversion	znode的ACL变更的版本号
+ephemeralOwner	临时节点的session id，如果不是临时节点，为0
+dataLength	znode中挂在的数据的长度
+numChildren	znode中子节点的个数
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+
