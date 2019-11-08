@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<!-- saved from url=(0074)https://developers.google.com/protocol-buffers/docs/encoding?csw=1#varints -->
+<html lang="en" dir="ltr" class="cye-enabled cye-nm cye-lm-tag"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style>body {transition: opacity ease-in 0.2s; } 
+body[unresolved] {opacity: 0; display: block; overflow: hidden; position: relative; } 
+</style>
+    <meta name="google-signin-client-id" content="721724668570-nbkv1cfusk7kk4eni4pjvepaus73b13t.apps.googleusercontent.com">
+    <meta name="google-signin-scope" content="profile email">
+    <meta property="og:site_name" content="Google Developers">
+    <meta property="og:type" content="website">
+    
+          <meta name="theme-color" content="#1a73e8">
+    
+    
+    <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="https://developers.google.com/_pwa/developers/manifest.json" crossorigin="use-credentials">
+    <link rel="preconnect" href="https://www.gstatic.com/" crossorigin="">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+    <link rel="preconnect" href="https://fonts.googleapis.com/" crossorigin="">
+    <link rel="stylesheet" href="./Encoding  _  Protocol Buffers  _  Google Developers_files/css">
+        <link rel="stylesheet" href="./Encoding  _  Protocol Buffers  _  Google Developers_files/app.css">
+    <noscript>
+      <link rel="stylesheet" href="https://www.gstatic.com/devrel-devsite/v45ff8f523b59dba1a68309c845322ac9e5fdaa00274f34f2986d46556e823992/developers/css/ce_bundle.css">
+    </noscript>
+    <link rel="shortcut icon" href="https://www.gstatic.com/devrel-devsite/v45ff8f523b59dba1a68309c845322ac9e5fdaa00274f34f2986d46556e823992/developers/images/favicon.png">
+    <link rel="apple-touch-icon" href="https://www.gstatic.com/devrel-devsite/v45ff8f523b59dba1a68309c845322ac9e5fdaa00274f34f2986d46556e823992/developers/images/touchicon-180.png"><link rel="canonical" href="https://developers.google.com/protocol-buffers/docs/encoding"><link rel="search" type="application/opensearchdescription+xml" href="https://developers.google.com/s/opensearch.xml" data-title="Google Developers">      
+<title>Encoding &nbsp;|&nbsp; Protocol Buffers &nbsp;|&nbsp; Google Developers</title>
+
+<meta property="og:title" content="Encoding  |  Protocol Buffers  |  Google Developers">
+
+
+  <meta property="og:url" content="https://developers.google.com/protocol-buffers/docs/encoding">
+
+  <meta property="og:image" content="https://www.gstatic.com/devrel-devsite/v45ff8f523b59dba1a68309c845322ac9e5fdaa00274f34f2986d46556e823992/developers/images/opengraph/google-blue.png">
+  <meta property="og:image:secure_url" content="https://www.gstatic.com/devrel-devsite/v45ff8f523b59dba1a68309c845322ac9e5fdaa00274f34f2986d46556e823992/developers/images/opengraph/google-blue.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="675">
+  <meta property="og:locale" content="en">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <meta name="xsrf_token" content="enYHcr9R7IXP9KVC5pfsOPP5tpuTtR2-EF1Vt1ZBmQw6MTU3MDI4NzU0NTYxMDg1Ng">
+
+
+
+    
+    
+    
+  
+    <style id="nightModeStyle">
+html.cye-enabled.cye-nm:not(*:-webkit-full-screen) body,
+ html.cye-enabled.cye-nm:not(*:-webkit-full-screen) #cye-workaround-body {-webkit-filter:contrast(91%) brightness(84%) invert(1);}</style><style id="cyebody">html.cye-enabled.cye-lm body{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}</style><style id="cyediv">html.cye-enabled.cye-lm div{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}</style><style id="cyetable">html.cye-enabled.cye-lm th{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}html.cye-enabled.cye-lm td{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}</style><style id="cyetextInput">html.cye-enabled.cye-lm input[type=text]{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}html.cye-enabled.cye-lm textarea{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}</style><style id="cyeselect">html.cye-enabled.cye-lm select{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}</style><style id="cyeul">html.cye-enabled.cye-lm ul{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}</style><style id="cyeChangeByClick">html.cye-enabled.cye-lm .cye-lm-tag,html.cye-enabled.cye-lm.cye-lm-tag{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}</style><script src="./Encoding  _  Protocol Buffers  _  Google Developers_files/cb=gapi.loaded_0" async=""></script><script type="text/javascript" async="" src="./Encoding  _  Protocol Buffers  _  Google Developers_files/linkid.js.下载"></script><script src="./Encoding  _  Protocol Buffers  _  Google Developers_files/webcomponents-lite.js.下载"></script><script src="./Encoding  _  Protocol Buffers  _  Google Developers_files/devsite_app__zh_cn.js.下载"></script><script src="./Encoding  _  Protocol Buffers  _  Google Developers_files/analytics.js.下载"></script><script src="./Encoding  _  Protocol Buffers  _  Google Developers_files/devsite_code_module__zh_cn.js.下载"></script><link rel="stylesheet" type="text/css" href="./Encoding  _  Protocol Buffers  _  Google Developers_files/devsite_code.css"><script src="./Encoding  _  Protocol Buffers  _  Google Developers_files/devsite_heading_module__zh_cn.js.下载"></script><link rel="stylesheet" type="text/css" href="./Encoding  _  Protocol Buffers  _  Google Developers_files/devsite_heading.css"><script src="./Encoding  _  Protocol Buffers  _  Google Developers_files/devsite_page_rating_module__zh_cn.js.下载"></script><link rel="stylesheet" type="text/css" href="./Encoding  _  Protocol Buffers  _  Google Developers_files/devsite_page_rating.css"><script src="./Encoding  _  Protocol Buffers  _  Google Developers_files/devsite_snackbar_module__zh_cn.js.下载"></script><link rel="stylesheet" type="text/css" href="./Encoding  _  Protocol Buffers  _  Google Developers_files/devsite_snackbar.css"><script src="./Encoding  _  Protocol Buffers  _  Google Developers_files/devsite_tooltip_module__zh_cn.js.下载"></script><link rel="stylesheet" type="text/css" href="./Encoding  _  Protocol Buffers  _  Google Developers_files/devsite_tooltip.css"><link rel="stylesheet" type="text/css" href="./Encoding  _  Protocol Buffers  _  Google Developers_files/devsite_content_footer.css"><style type="text/css">.gb_Oa{font:13px/27px Roboto,RobotoDraft,Arial,sans-serif;z-index:986}@-webkit-keyframes gb__a{0%{opacity:0}50%{opacity:1}}@keyframes gb__a{0%{opacity:0}50%{opacity:1}}a.gb_W{border:none;color:#4285f4;cursor:default;font-weight:bold;outline:none;position:relative;text-align:center;text-decoration:none;text-transform:uppercase;white-space:nowrap;-webkit-user-select:none}a.gb_W:hover:after,a.gb_W:focus:after{background-color:rgba(0,0,0,.12);content:'';height:100%;left:0;position:absolute;top:0;width:100%}a.gb_W:hover,a.gb_W:focus{text-decoration:none}a.gb_W:active{background-color:rgba(153,153,153,.4);text-decoration:none}a.gb_X{background-color:#4285f4;color:#fff}a.gb_X:active{background-color:#0043b2}.gb_Z{-webkit-box-shadow:0 1px 1px rgba(0,0,0,.16);box-shadow:0 1px 1px rgba(0,0,0,.16)}.gb_W,.gb_X,.gb_0,.gb_1{display:inline-block;line-height:28px;padding:0 12px;-webkit-border-radius:2px;border-radius:2px}.gb_0{background:#f8f8f8;border:1px solid #c6c6c6}.gb_1{background:#f8f8f8}.gb_0,#gb a.gb_0.gb_0,.gb_1{color:#666;cursor:default;text-decoration:none}#gb a.gb_1.gb_1{cursor:default;text-decoration:none}.gb_1{border:1px solid #4285f4;font-weight:bold;outline:none;background:#4285f4;background:-webkit-linear-gradient(top,#4387fd,#4683ea);background:linear-gradient(top,#4387fd,#4683ea);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#4387fd,endColorstr=#4683ea,GradientType=0)}#gb a.gb_1.gb_1{color:#fff}.gb_1:hover{-webkit-box-shadow:0 1px 0 rgba(0,0,0,.15);box-shadow:0 1px 0 rgba(0,0,0,.15)}.gb_1:active{-webkit-box-shadow:inset 0 2px 0 rgba(0,0,0,.15);box-shadow:inset 0 2px 0 rgba(0,0,0,.15);background:#3c78dc;background:-webkit-linear-gradient(top,#3c7ae4,#3f76d3);background:linear-gradient(top,#3c7ae4,#3f76d3);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#3c7ae4,endColorstr=#3f76d3,GradientType=0)}.gb_va{display:none!important}.gb_wa{visibility:hidden}.gb_hd{display:inline-block;vertical-align:middle}.gb_Lf{position:relative}.gb_B{display:inline-block;outline:none;vertical-align:middle;-webkit-border-radius:2px;border-radius:2px;-webkit-box-sizing:border-box;box-sizing:border-box;height:40px;width:40px;color:#000;cursor:pointer;text-decoration:none}#gb#gb a.gb_B{color:#000;cursor:pointer;text-decoration:none}.gb_Qa{border-color:transparent;border-bottom-color:#fff;border-style:dashed dashed solid;border-width:0 8.5px 8.5px;display:none;position:absolute;left:11.5px;top:43px;z-index:1;height:0;width:0;-webkit-animation:gb__a .2s;animation:gb__a .2s}.gb_Ra{border-color:transparent;border-style:dashed dashed solid;border-width:0 8.5px 8.5px;display:none;position:absolute;left:11.5px;z-index:1;height:0;width:0;-webkit-animation:gb__a .2s;animation:gb__a .2s;border-bottom-color:#ccc;border-bottom-color:rgba(0,0,0,.2);top:42px}x:-o-prefocus,div.gb_Ra{border-bottom-color:#ccc}.gb_D{background:#fff;border:1px solid #ccc;border-color:rgba(0,0,0,.2);color:#000;-webkit-box-shadow:0 2px 10px rgba(0,0,0,.2);box-shadow:0 2px 10px rgba(0,0,0,.2);display:none;outline:none;overflow:hidden;position:absolute;right:8px;top:62px;-webkit-animation:gb__a .2s;animation:gb__a .2s;-webkit-border-radius:2px;border-radius:2px;-webkit-user-select:text}.gb_hd.gb_Ec .gb_Qa,.gb_hd.gb_Ec .gb_Ra,.gb_hd.gb_Ec .gb_D,.gb_Ec.gb_D{display:block}.gb_hd.gb_Ec.gb_Mf .gb_Qa,.gb_hd.gb_Ec.gb_Mf .gb_Ra{display:none}.gb_Nf{position:absolute;right:8px;top:62px;z-index:-1}.gb_Aa .gb_Qa,.gb_Aa .gb_Ra,.gb_Aa .gb_D{margin-top:-10px}.gb_hd:first-child,#gbsfw:first-child+.gb_hd{padding-left:4px}.gb_ja.gb_Ue .gb_hd:first-child{padding-left:0}.gb_Zc{position:relative}.gb_Nc .gb_Zc,.gb_4d .gb_Zc{float:right}.gb_B{padding:8px;cursor:pointer}.gb_ja .gb_pb:not(.gb_W):focus img{background-color:rgba(0,0,0,0.20);outline:none;-webkit-border-radius:50%;border-radius:50%}.gb_Ve button:focus svg,.gb_Ve button:hover svg,.gb_Ve button:active svg,.gb_B:focus,.gb_B:hover,.gb_B:active,.gb_B[aria-expanded=true]{outline:none;-webkit-border-radius:50%;border-radius:50%}.gb_vc .gb_Ve.gb_We button:focus svg,.gb_vc .gb_Ve.gb_We button:focus:hover svg,.gb_Ve button:focus svg,.gb_Ve button:focus:hover svg,.gb_B:focus,.gb_B:focus:hover{background-color:rgba(60,64,67,0.1)}.gb_vc .gb_Ve.gb_We button:active svg,.gb_Ve button:active svg,.gb_B:active{background-color:rgba(60,64,67,0.12)}.gb_vc .gb_Ve.gb_We button:hover svg,.gb_Ve button:hover svg,.gb_B:hover{background-color:rgba(60,64,67,0.08)}.gb_fa .gb_B.gb_Da:hover{background-color:transparent}.gb_B[aria-expanded=true],.gb_B:hover[aria-expanded=true]{background-color:rgba(95,99,104,0.24)}.gb_B[aria-expanded=true] .gb_Xe,.gb_B[aria-expanded=true] .gb_Ze{fill:#5f6368;opacity:1}.gb_vc .gb_Ve button:hover svg,.gb_vc .gb_B:hover{background-color:rgba(232,234,237,0.08)}.gb_vc .gb_Ve button:focus svg,.gb_vc .gb_Ve button:focus:hover svg,.gb_vc .gb_B:focus,.gb_vc .gb_B:focus:hover{background-color:rgba(232,234,237,0.10)}.gb_vc .gb_Ve button:active svg,.gb_vc .gb_B:active{background-color:rgba(232,234,237,0.12)}.gb_vc .gb_B[aria-expanded=true],.gb_vc .gb_B:hover[aria-expanded=true]{background-color:rgba(255,255,255,0.12)}.gb_vc .gb_B[aria-expanded=true] .gb_Xe,.gb_vc .gb_B[aria-expanded=true] .gb_Ze{fill:#ffffff;opacity:1}.gb_hd{padding:4px}.gb_ja.gb_Ue .gb_hd{padding:4px 2px}.gb_ja.gb_Ue .gb_Ea.gb_hd{padding-left:6px}.gb_D{z-index:991;line-height:normal}.gb_D.gb_0e{left:8px;right:auto}@media (max-width:350px){.gb_D.gb_0e{left:0}}.gb_1e .gb_D{top:56px}.gb_A .gb_B,.gb_C .gb_A .gb_B{background-position:-64px -29px}.gb_h .gb_A .gb_B{background-position:-29px -29px;opacity:1}.gb_A .gb_B,.gb_A .gb_B:hover,.gb_A .gb_B:focus{opacity:1}.gb_Od{display:none}.gb_1c{font-family:Google Sans,Roboto,RobotoDraft,Helvetica,Arial,sans-serif;font-size:20px;font-weight:400;letter-spacing:.25px;line-height:48px;margin-bottom:2px;opacity:1;overflow:hidden;padding-left:16px;position:relative;text-overflow:ellipsis;vertical-align:middle;top:2px;white-space:nowrap;-webkit-flex:1 1 auto;flex:1 1 auto}.gb_1c.gb_2c{color:#3c4043}.gb_ja.gb_ka .gb_1c{margin-bottom:0}.gb_3c.gb_4c .gb_1c{padding-left:4px}.gb_ja.gb_ka .gb_5c{position:relative;top:-2px}.gb_ja{color:black;min-width:320px;position:relative;-webkit-transition:box-shadow 250ms;transition:box-shadow 250ms}.gb_ja.gb_Dc{min-width:240px}.gb_ja.gb_Pd .gb_Wc{display:none}.gb_ja.gb_Pd .gb_Qd{height:56px}header.gb_ja{display:block}.gb_ja svg{fill:currentColor}.gb_Rd{position:fixed;top:0;width:100%}.gb_Sd{-webkit-box-shadow:0 4px 5px 0 rgba(0,0,0,0.14),0 1px 10px 0 rgba(0,0,0,0.12),0 2px 4px -1px rgba(0,0,0,0.2);box-shadow:0 4px 5px 0 rgba(0,0,0,0.14),0 1px 10px 0 rgba(0,0,0,0.12),0 2px 4px -1px rgba(0,0,0,0.2)}.gb_Td{height:64px}.gb_ja:not(.gb_Ic) .gb_7c.gb_8c:not(.gb_Ud),.gb_ja:not(.gb_Ic) .gb_Ld:not(.gb_Ud),.gb_ja.gb_Vd .gb_7c.gb_8c.gb_Ud,.gb_ja.gb_Vd .gb_Ld.gb_Ud{display:none!important}.gb_Qd{-webkit-box-sizing:border-box;box-sizing:border-box;position:relative;width:100%;display:-webkit-box;display:-webkit-flex;display:flex;-webkit-box-pack:space-between;-webkit-justify-content:space-between;justify-content:space-between;min-width:-webkit-min-content;min-width:min-content}.gb_ja:not(.gb_ka) .gb_Qd{padding:8px}.gb_ja.gb_Wd .gb_Qd{-webkit-flex:1 0 auto;flex:1 0 auto}.gb_ja .gb_Qd.gb_Xd.gb_Zd{min-width:0}.gb_ja.gb_ka .gb_Qd{padding:4px;padding-left:8px;min-width:0}.gb_Wc{height:48px;vertical-align:middle;white-space:nowrap;-webkit-box-align:center;-webkit-align-items:center;align-items:center;display:-webkit-box;display:-webkit-flex;display:flex;-webkit-user-select:none}.gb_1d>.gb_Wc{display:table-cell;width:100%}.gb_3c{padding-right:30px;-webkit-box-sizing:border-box;box-sizing:border-box;-webkit-flex:1 0 auto;flex:1 0 auto}.gb_ja.gb_ka .gb_3c{padding-right:14px}.gb_2d{-webkit-flex:1 1 100%;flex:1 1 100%}.gb_2d>:only-child{display:inline-block}.gb_Xc.gb_Oc{padding-left:4px}.gb_Xc.gb_3d,.gb_ja.gb_Wd .gb_Xc,.gb_ja.gb_ka:not(.gb_4d) .gb_Xc{padding-left:0}.gb_ja.gb_ka .gb_Xc.gb_3d{padding-right:0}.gb_ja.gb_ka .gb_Xc.gb_3d .gb_fa{margin-left:10px}.gb_Oc{display:inline}.gb_ja.gb_Ic .gb_Xc.gb_5d{padding-left:2px}.gb_1c{display:inline-block}.gb_Xc{-webkit-box-sizing:border-box;box-sizing:border-box;height:48px;line-height:normal;padding:0 4px;padding-left:30px;-webkit-flex:0 0 auto;flex:0 0 auto;-webkit-box-pack:flex-end;-webkit-justify-content:flex-end;justify-content:flex-end}.gb_4d{height:48px}.gb_ja.gb_4d{min-width:initial;min-width:auto}.gb_4d .gb_Xc{float:right;padding-left:32px}.gb_6d{font-size:14px;max-width:200px;overflow:hidden;padding:0 12px;text-overflow:ellipsis;white-space:nowrap;-webkit-user-select:text}.gb_7d{-webkit-transition:background-color .4s;transition:background-color .4s}.gb_8d{color:black}.gb_vc{color:white}.gb_ja a,.gb_Ac a{color:inherit}.gb_r{color:rgba(0,0,0,0.87)}.gb_ja svg,.gb_Ac svg,.gb_3c .gb_9d,.gb_Nc .gb_9d{color:#5f6368;opacity:1}.gb_vc svg,.gb_Ac.gb_Fc svg,.gb_vc .gb_3c .gb_9d,.gb_vc .gb_3c .gb_uc,.gb_vc .gb_3c .gb_5c,.gb_Ac.gb_Fc .gb_9d{color:rgba(255,255,255,.87)}.gb_vc .gb_3c .gb_la:not(.gb_ae){opacity:.87}.gb_2c{color:inherit;opacity:1;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}.gb_vc .gb_2c,.gb_8d .gb_2c{opacity:1}.gb_be{position:relative}.gb_ce{line-height:normal;padding-right:15px}a.gb_e,span.gb_e{color:rgba(0,0,0,0.87);text-decoration:none}.gb_vc a.gb_e,.gb_vc span.gb_e{color:white}a.gb_e:hover,a.gb_e:focus{opacity:.85;text-decoration:underline}.gb_f{display:inline-block;padding-left:15px}.gb_f .gb_e{display:inline-block;line-height:24px;outline:none;vertical-align:middle}.gb_de{font-family:Google Sans,Roboto,RobotoDraft,Helvetica,Arial,sans-serif;font-weight:500;font-size:14px;letter-spacing:.25px;line-height:16px;margin-left:10px;margin-right:8px;min-width:96px;padding:9px 23px;text-align:center;vertical-align:middle;-webkit-border-radius:4px;border-radius:4px;-webkit-box-sizing:border-box;box-sizing:border-box}.gb_ja.gb_4d .gb_de{margin-left:8px}#gb a.gb_1.gb_1.gb_de,#gb a.gb_0.gb_0.gb_de{cursor:pointer}.gb_1.gb_de:hover{background:#2b7de9;-webkit-box-shadow:0 1px 2px 0 rgba(66,133,244,0.3),0 1px 3px 1px rgba(66,133,244,0.15);box-shadow:0 1px 2px 0 rgba(66,133,244,0.3),0 1px 3px 1px rgba(66,133,244,0.15)}.gb_1.gb_de:focus,.gb_1.gb_de:hover:focus{background:#5094ed;-webkit-box-shadow:0 1px 2px 0 rgba(66,133,244,0.3),0 1px 3px 1px rgba(66,133,244,0.15);box-shadow:0 1px 2px 0 rgba(66,133,244,0.3),0 1px 3px 1px rgba(66,133,244,0.15)}.gb_1.gb_de:active{background:#63a0ef;-webkit-box-shadow:0 1px 2px 0 rgba(66,133,244,0.3),0 1px 3px 1px rgba(66,133,244,0.15);box-shadow:0 1px 2px 0 rgba(66,133,244,0.3),0 1px 3px 1px rgba(66,133,244,0.15)}.gb_de:not(.gb_0){background:#1a73e8;border:1px solid transparent}.gb_ja.gb_ka .gb_de{padding:9px 15px;min-width:80px}#gb a.gb_1.gb_ee.gb_de,#gb a.gb_de.gb_0{background:#ffffff;border-color:#dadce0;-webkit-box-shadow:none;box-shadow:none;color:#1a73e8}#gb a.gb_1.gb_ee.gb_de:hover,#gb a.gb_de.gb_0:hover{background:#f8fbff;border-color:#cce0fc}#gb a.gb_1.gb_ee.gb_de:focus,#gb a.gb_1.gb_ee.gb_de:focus:hover,#gb a.gb_de.gb_0:focus,#gb a.gb_de.gb_0:focus:hover{background:#f4f8ff;border-color:#c9ddfc}#gb a.gb_1.gb_ee.gb_de:active,#gb a.gb_de.gb_0:active{background:#ecf3fe}#gb a.gb_1.gb_ee.gb_de:active{-webkit-box-shadow:0 1px 2px 0 rgba(0,0,0,0.3),0 2px 6px 2px rgba(0,0,0,0.15);box-shadow:0 1px 2px 0 rgba(0,0,0,0.3),0 2px 6px 2px rgba(0,0,0,0.15)}#gb a.gb_de.gb_0:not(.gb_ee):active{-webkit-box-shadow:0 1px 2px 0 rgba(60,64,67,0.3),0 2px 6px 2px rgba(60,64,67,0.15);box-shadow:0 1px 2px 0 rgba(60,64,67,0.3),0 2px 6px 2px rgba(60,64,67,0.15)}.gb_fa{background-color:rgba(255,255,255,0.88);cursor:pointer;display:inline-block;overflow:hidden;padding:0;vertical-align:middle;border:1px solid #dadce0;outline:none;-webkit-box-sizing:border-box;box-sizing:border-box;-webkit-border-radius:8px;border-radius:8px}.gb_fa:hover{border:1px solid #d2e3fc;background-color:rgba(248,250,255,0.88)}.gb_fa:focus{border:1px solid #fff;background-color:rgba(255,255,255);-webkit-box-shadow:0 1px 2px 0 rgba(60,64,67,0.3),0 1px 3px 1px rgba(60,64,67,0.15);box-shadow:0 1px 2px 0 rgba(60,64,67,0.3),0 1px 3px 1px rgba(60,64,67,0.15)}.gb_ga{display:inline-block;padding-left:7px;padding-bottom:2px;text-align:center;vertical-align:middle}.gb_ga.gb_ha{background-color:#f1f3f4;-webkit-border-radius:4px;border-radius:4px;margin-left:8px;padding-left:0}.gb_ga.gb_ha .gb_ia{vertical-align:middle}.gb_ja:not(.gb_ka) .gb_fa{margin-left:10px;margin-right:4px}.gb_fa .gb_ia.gb_la{min-width:0}.gb_xa{-webkit-background-size:32px 32px;background-size:32px 32px;-webkit-border-radius:50%;border-radius:50%;display:block;margin:0;overflow:hidden;position:relative;height:32px;width:32px;z-index:0}@media (min-resolution:1.25dppx),(-o-min-device-pixel-ratio:5/4),(-webkit-min-device-pixel-ratio:1.25),(min-device-pixel-ratio:1.25){.gb_xa::before{display:inline-block;-webkit-transform:scale(.5);transform:scale(.5);-webkit-transform-origin:left 0;transform-origin:left 0}.gb_ya::before{display:inline-block;-webkit-transform:scale(.5);transform:scale(.5);-webkit-transform-origin:left 0;transform-origin:left 0}.gb_j .gb_ya::before{-webkit-transform:scale(0.416666667);transform:scale(0.416666667)}}.gb_xa:hover,.gb_xa:focus{-webkit-box-shadow:0 1px 0 rgba(0,0,0,.15);box-shadow:0 1px 0 rgba(0,0,0,.15)}.gb_xa:active{-webkit-box-shadow:inset 0 2px 0 rgba(0,0,0,.15);box-shadow:inset 0 2px 0 rgba(0,0,0,.15)}.gb_xa:active::after{background:rgba(0,0,0,.1);-webkit-border-radius:50%;border-radius:50%;content:'';display:block;height:100%}.gb_za{cursor:pointer;line-height:40px;min-width:30px;opacity:.75;overflow:hidden;vertical-align:middle;text-overflow:ellipsis}.gb_B.gb_za{width:auto}.gb_za:hover,.gb_za:focus{opacity:.85}.gb_Aa .gb_za,.gb_Aa .gb_Ba{line-height:26px}#gb#gb.gb_Aa a.gb_za,.gb_Aa .gb_Ba{font-size:11px;height:auto}.gb_Ca{border-top:4px solid #000;border-left:4px dashed transparent;border-right:4px dashed transparent;display:inline-block;margin-left:6px;opacity:.75;vertical-align:middle}.gb_Da:hover .gb_Ca{opacity:.85}.gb_fa>.gb_Ea{padding:3px 3px 3px 4px}.gb_Fa.gb_wa{color:#fff}.gb_h .gb_za,.gb_h .gb_Ca{opacity:1}#gb#gb.gb_h.gb_h a.gb_za,#gb#gb .gb_h.gb_h a.gb_za{color:#fff}.gb_h.gb_h .gb_Ca{border-top-color:#fff;opacity:1}.gb_C .gb_xa:hover,.gb_h .gb_xa:hover,.gb_C .gb_xa:focus,.gb_h .gb_xa:focus{-webkit-box-shadow:0 1px 0 rgba(0,0,0,.15),0 1px 2px rgba(0,0,0,.2);box-shadow:0 1px 0 rgba(0,0,0,.15),0 1px 2px rgba(0,0,0,.2)}.gb_Ha .gb_Ea,.gb_Ia .gb_Ea{position:absolute;right:1px}.gb_Ea.gb_g,.gb_Ja.gb_g,.gb_Da.gb_g{-webkit-flex:0 1 auto;flex:0 1 auto;-webkit-flex:0 1 main-size;flex:0 1 main-size}.gb_Ka.gb_La .gb_za{width:30px!important}.gb_Ma.gb_wa{display:none}.gb_Na{height:40px;position:absolute;right:-5px;top:-5px;width:40px}.gb_Oa .gb_Na,.gb_Pa .gb_Na{right:0;top:0}.gb_Ea .gb_B{padding:4px}.gb_ge{display:none}.gb_6c{display:none}.gb_6c.gb_Ec{display:block}.gb_7c{background-color:#fff;-webkit-box-shadow:0 1px 0 rgba(0,0,0,0.08);box-shadow:0 1px 0 rgba(0,0,0,0.08);color:#000;position:relative;z-index:986}.gb_8c{height:40px;padding:16px 24px;white-space:nowrap}.gb_9c{position:fixed;bottom:16px;padding:16px;right:16px;white-space:normal;width:328px;-webkit-transition:width .2s,bottom .2s,right .2s;transition:width .2s,bottom .2s,right .2s;-webkit-border-radius:2px;border-radius:2px;-webkit-box-shadow:0 5px 5px -3px rgba(0,0,0,0.2),0 8px 10px 1px rgba(0,0,0,0.14),0 3px 14px 2px rgba(0,0,0,0.12);box-shadow:0 5px 5px -3px rgba(0,0,0,0.2),0 8px 10px 1px rgba(0,0,0,0.14),0 3px 14px 2px rgba(0,0,0,0.12)}@media (max-width:400px){.gb_7c.gb_9c{max-width:368px;width:auto;bottom:0;right:0}}.gb_7c .gb_pb{border:0;font-weight:500;font-size:14px;line-height:36px;min-width:32px;padding:0 16px;vertical-align:middle}.gb_7c .gb_pb:before{content:'';height:6px;left:0;position:absolute;top:-6px;width:100%}.gb_7c .gb_pb:after{bottom:-6px;content:'';height:6px;left:0;position:absolute;width:100%}.gb_7c .gb_pb+.gb_pb{margin-left:8px}.gb_ad{height:48px;padding:4px;margin:-8px 0 0 -8px}.gb_9c .gb_ad{float:left;margin:-4px}.gb_bd{font-family:Roboto,RobotoDraft,Helvetica,Arial,sans-serif;overflow:hidden;vertical-align:top}.gb_8c .gb_bd{display:inline-block;padding-left:8px;width:640px}.gb_9c .gb_bd{display:block;margin-left:56px;padding-bottom:16px}.gb_cd{background-color:inherit}.gb_8c .gb_cd{display:inline-block;position:absolute;top:18px;right:24px}.gb_9c .gb_cd{text-align:right;padding-right:24px;padding-top:6px}.gb_cd .gb_dd{height:1.5em;margin:-.25em 10px -.25em 0;vertical-align:text-top;width:1.5em}.gb_ed{line-height:20px;font-size:16px;font-weight:700;color:rgba(0,0,0,.87)}.gb_9c .gb_ed{color:rgba(0,0,0,.87);font-size:16px;line-height:20px;padding-top:8px}.gb_8c .gb_ed,.gb_8c .gb_fd{width:640px}.gb_fd .gb_gd,.gb_fd{line-height:20px;font-size:13px;font-weight:400;color:rgba(0,0,0,.54)}.gb_9c .gb_fd .gb_gd{font-size:14px}.gb_9c .gb_fd{padding-top:12px}.gb_9c .gb_fd a{color:rgba(66,133,244,1)}.gb_hd.gb_id{padding:0}.gb_id .gb_D{background:#ffffff;border:solid 1px transparent;-webkit-border-radius:8px;border-radius:8px;-webkit-box-sizing:border-box;box-sizing:border-box;padding:16px;right:16px;top:72px;-webkit-box-shadow:0 1px 2px 0 rgba(65,69,73,0.3),0 3px 6px 2px rgba(65,69,73,0.15);box-shadow:0 1px 2px 0 rgba(65,69,73,0.3),0 3px 6px 2px rgba(65,69,73,0.15)}a.gb_jd{color:#5f6368!important;font-size:22px;height:24px;opacity:1;padding:8px;position:absolute;right:8px;top:8px;text-decoration:none!important;width:24px}a.gb_jd:focus,a.gb_jd:active,a.gb_jd:focus:hover{background-color:#e8eaed;-webkit-border-radius:50%;border-radius:50%;outline:none}a.gb_jd:hover{background-color:#f1f3f4;-webkit-border-radius:50%;border-radius:50%;outline:none}svg.gb_kd{fill:#5f6368;opacity:1}.gb_ld{padding:0;white-space:normal;display:table}.gb_md{line-height:normal;font-family:Roboto,RobotoDraft,Helvetica,Arial,sans-serif}.gb_id .gb_1:active{outline:none;-webkit-box-shadow:0 4px 5px rgba(0,0,0,.16);box-shadow:0 4px 5px rgba(0,0,0,.16)}.gb_W.gb_nd.gb_od{-webkit-border-radius:4px;border-radius:4px;cursor:pointer;height:16px;color:#5f6368;font-family:Google Sans,Roboto,RobotoDraft,Helvetica,Arial,sans-serif;font-weight:500;letter-spacing:.25px;line-height:16px;padding:8px 6px;text-transform:none;-webkit-font-smoothing:antialiased}.gb_W.gb_nd:hover{background-color:#f8f9fa}.gb_W.gb_nd:focus,.gb_W.gb_nd:hover:focus{background-color:#f1f3f4;border-color:transparent}.gb_W.gb_nd:active{background-color:#f1f3f4;-webkit-box-shadow:0 1px 2px 0 rgba(60,64,67,0.3),0 1px 3px 1px rgba(60,64,67,0.15);box-shadow:0 1px 2px 0 rgba(60,64,67,0.3),0 1px 3px 1px rgba(60,64,67,0.15)}.gb_gd{color:#5f6368;font-family:Roboto,RobotoDraft,Helvetica,Arial,sans-serif;font-size:14px;letter-spacing:.25px;line-height:20px;margin:0;margin-bottom:5px}.gb_pd{text-align:right;font-size:14px;padding-bottom:0;white-space:nowrap}.gb_pd .gb_qd{margin-left:12px;text-transform:none}a.gb_1.gb_qd:hover{background-color:#2b7de9;border-color:transparent;-webkit-box-shadow:0 1px 2px 0 rgba(66,133,244,0.3),0 1px 3px 1px rgba(66,133,244,0.15);box-shadow:0 1px 2px 0 rgba(66,133,244,0.3),0 1px 3px 1px rgba(66,133,244,0.15)}a.gb_1.gb_qd:focus,a.gb_1.gb_qd:hover:focus{background-color:#5094ed;border-color:transparent;-webkit-box-shadow:0 1px 2px 0 rgba(66,133,244,0.3),0 1px 3px 1px rgba(66,133,244,0.15);box-shadow:0 1px 2px 0 rgba(66,133,244,0.3),0 1px 3px 1px rgba(66,133,244,0.15)}a.gb_1.gb_qd:active{background-color:#63a0ef;-webkit-box-shadow:0 1px 2px 0 rgba(66,133,244,0.3),0 1px 3px 1px rgba(66,133,244,0.15);box-shadow:0 1px 2px 0 rgba(66,133,244,0.3),0 1px 3px 1px rgba(66,133,244,0.15)}.gb_pd .gb_qd.gb_rd{padding-left:6px;padding-right:14px}.gb_pd .gb_od.gb_qd img{background-color:inherit;-webkit-border-radius:initial;border-radius:initial;height:18px;margin:0 8px 0 4px;vertical-align:text-top;width:18px}.gb_sd .gb_ld .gb_td .gb_od{border:2px solid transparent}.gb_sd .gb_ld .gb_td .gb_od:focus:after,.gb_sd .gb_ld .gb_td .gb_od:hover:after{background-color:transparent}.gb_md{background-color:#404040;color:#fff;padding:16px;position:absolute;top:62px;min-width:328px;max-width:650px;right:8px;-webkit-border-radius:2px;border-radius:2px;-webkit-box-shadow:4px 4px 12px rgba(0,0,0,0.4);box-shadow:4px 4px 12px rgba(0,0,0,0.4)}.gb_md a,.gb_md a:visited{color:#5e97f6;text-decoration:none}.gb_ud{text-transform:uppercase}.gb_vd{padding-left:50px}.gb_wd{color:#3c4043;font-family:Google Sans,Roboto,RobotoDraft,Helvetica,Arial,sans-serif;font-size:16px;font-weight:500;letter-spacing:.1px;line-height:20px;margin:0;margin-bottom:12px}.gb_gd a.gb_yd{text-decoration:none;color:#5e97f6}.gb_gd a.gb_yd:visited{color:#5e97f6}.gb_gd a.gb_yd:hover,.gb_gd a.gb_yd:active{text-decoration:underline}.gb_zd{position:absolute;background:transparent;top:-999px;z-index:-1;visibility:hidden;margin-top:1px;margin-left:1px}#gb .gb_id{margin:0}.gb_id .gb_pb{background:#4d90fe;border:2px solid transparent;-webkit-box-sizing:border-box;box-sizing:border-box;font-weight:500;margin-top:21px;min-width:70px;text-align:center;-webkit-font-smoothing:antialiased}.gb_id a.gb_1{background:#1a73e8;-webkit-border-radius:4px;border-radius:4px;color:#ffffff;font-family:Google Sans,Roboto,RobotoDraft,Helvetica,Arial,sans-serif;font-size:14px;font-weight:500;letter-spacing:.25px;line-height:16px;padding:8px 22px;-webkit-font-smoothing:antialiased}.gb_id a.gb_1.gb_Ad{background:#d93025}.gb_id a.gb_1.gb_Ad:hover{background-color:#cc3127}.gb_id a.gb_1.gb_Ad:focus,.gb_id a.gb_1.gb_Ad:focus:hover{background-color:#b3332c}.gb_id a.gb_1.gb_Ad:active,.gb_id a.gb_1.gb_Ad:focus:active{background-color:#a6342e}.gb_id:not(.gb_sd) a.gb_1{float:right}#gb .gb_id a.gb_pb.gb_pb{color:#ffffff;cursor:pointer}.gb_id .gb_pb:hover{background:#357ae8;border-color:#2f5bb7}.gb_Bd,.gb_td{display:table-cell}.gb_Bd{vertical-align:middle}.gb_Bd img{height:48px;padding-left:4px;padding-right:20px;width:48px}.gb_td{padding-left:13px;width:100%}.gb_id .gb_td{padding-top:4px;min-width:326px;padding-left:0;width:326px}.gb_id.gb_Cd .gb_td{min-width:254px;width:254px}.gb_id:not(.gb_sd) .gb_td{padding-top:32px}.gb_Dd{display:block;display:inline-block;padding:1em 0 0 0;position:relative;width:100%}.gb_Ed{color:#ff0000;font-style:italic;margin:0;padding-left:46px}.gb_Dd .gb_Fd{float:right;margin:-20px 0;width:-webkit-calc(100% - 46px);width:calc(100% - 46px)}.gb_Hd svg{fill:grey}.gb_Hd.gb_Id svg{fill:#4285f4}.gb_Dd .gb_Fd label:after{background-color:#4285f4}.gb_Hd{display:inline;float:right;margin-right:22px;position:relative;top:2px}.gb_Ld{color:#ffffff;font-size:13px;font-weight:bold;height:25px;line-height:19px;padding-top:5px;padding-left:12px;position:relative;background-color:#4d90fe}.gb_Ld .gb_Md{color:#ffffff;cursor:default;font-size:22px;font-weight:normal;position:absolute;right:12px;top:5px}.gb_Ld .gb_qd,.gb_Ld .gb_nd{color:#ffffff;display:inline-block;font-size:11px;margin-left:16px;padding:0 8px;white-space:nowrap}.gb_Nd{background:none;background-image:-webkit-gradient(linear,left top,left bottom,from(rgba(0,0,0,0.16)),to(rgba(0,0,0,0.2)));background-image:-webkit-linear-gradient(top,rgba(0,0,0,0.16),rgba(0,0,0,0.2));background-image:linear-gradient(top,rgba(0,0,0,0.16),rgba(0,0,0,0.2));background-image:-webkit-linear-gradient(top,rgba(0,0,0,0.16),rgba(0,0,0,0.2));border-radius:2px;border:1px solid #dcdcdc;border:1px solid rgba(0,0,0,0.1);cursor:default!important;filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#160000ff,endColorstr=#220000ff);text-decoration:none!important;-webkit-border-radius:2px}.gb_Nd:hover{background:none;background-image:-webkit-gradient(linear,left top,left bottom,from(rgba(0,0,0,0.14)),to(rgba(0,0,0,0.2)));background-image:-webkit-linear-gradient(top,rgba(0,0,0,0.14),rgba(0,0,0,0.2));background-image:linear-gradient(top,rgba(0,0,0,0.14),rgba(0,0,0,0.2));background-image:-webkit-linear-gradient(top,rgba(0,0,0,0.14),rgba(0,0,0,0.2));border:1px solid rgba(0,0,0,0.2);box-shadow:0 1px 1px rgba(0,0,0,0.1);-webkit-box-shadow:0 1px 1px rgba(0,0,0,0.1);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#14000000,endColorstr=#22000000)}.gb_Nd:active{box-shadow:inset 0 1px 2px rgba(0,0,0,0.3);-webkit-box-shadow:inset 0 1px 2px rgba(0,0,0,0.3)}.gb_ja .gb_W{color:#4285f4}.gb_ja .gb_X{color:#fff}.gb_ja .gb_pb:not(.gb_Se):focus{outline:none}sentinel{}.gbii::before{content:url(https://lh3.googleusercontent.com/-I4Pmvi2yUcM/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rdWujgmfttWUh0hF9AT9M7MUnGrKA.CMID/s32-c/photo.jpg)}.gbip::before{content:url(https://lh3.googleusercontent.com/-I4Pmvi2yUcM/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rdWujgmfttWUh0hF9AT9M7MUnGrKA.CMID/s96-c/photo.jpg)}@media (min-resolution:1.25dppx),(-o-min-device-pixel-ratio:5/4),(-webkit-min-device-pixel-ratio:1.25),(min-device-pixel-ratio:1.25){.gbii::before{content:url(https://lh3.googleusercontent.com/-I4Pmvi2yUcM/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rdWujgmfttWUh0hF9AT9M7MUnGrKA.CMID/s64-c/photo.jpg)}.gbip::before{content:url(https://lh3.googleusercontent.com/-I4Pmvi2yUcM/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rdWujgmfttWUh0hF9AT9M7MUnGrKA.CMID/s192-c/photo.jpg)}}
+</style><script async="" type="text/javascript" charset="UTF-8" src="./Encoding  _  Protocol Buffers  _  Google Developers_files/rs=AA2YrTv1ij5JfFSoPI4yIlQGTzq48kehlg"></script><link type="text/css" rel="stylesheet" href="./Encoding  _  Protocol Buffers  _  Google Developers_files/rs=AA2YrTsI2RgsT8KmZ1d1EnV0KOon40EFpA"><script type="text/javascript" charset="UTF-8" src="./Encoding  _  Protocol Buffers  _  Google Developers_files/HrK92udDk6HoGDmAxeAPjdRCsXObyhVNLwAlDW4jykM.js.下载"></script></head>
+  <body type="article" theme="google-blue" class="cye-lm-tag" layout="docs" style="" ready="" signed-in="">
+    <devsite-progress id="app-progress"></devsite-progress>
+    <div class="devsite-wrapper cye-lm-tag"><devsite-header top-row--height="48" bottom-row--height="48" bottom-tabs--height="48" fixed="" offset="48" bottom-row--hidden="">
+      
+
+
+
+
+
+
+
+
+
+<div class="devsite-header--inner">
+  <div class="devsite-top-logo-row-wrapper-wrapper">
+    <div class="devsite-top-logo-row-wrapper">
+      <div class="devsite-top-logo-row">
+        <button type="button" id="devsite-hamburger-menu" class="devsite-header-icon-button button-flat material-icons gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Navigation menu button" aria-label="Close menu">
+        </button>
+        <div class="devsite-product-name-wrapper">
+      
+  
+            <span class="devsite-product-name cye-lm-tag">
+            <ul class="devsite-breadcrumb-list">
+    <li class="devsite-breadcrumb-item
+             ">
+                                  <a href="https://developers.google.com/protocol-buffers" class="devsite-breadcrumb-link gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Upper Header" data-value="1">
+              Protocol Buffers        
+  </a>
+              </li>
+  </ul>
+          </span>
+        
+</div>        <div class="devsite-top-logo-row-middle">
+          <div class="devsite-header-upper-tabs">
+                       </div>
+          <devsite-search enable-signin="" enable-search="" enable-suggestions="" enable-query-completion="" project-name="Protocol Buffers" tenant-name="Google Developers" project-scope="/protocol-buffers" url-scoped="https://developers.google.com/s/results/protocol-buffers">
+  <form class="devsite-search-form" action="https://developers.google.com/s/results" method="GET">
+    <div class="devsite-search-container">
+      <div class="devsite-searchbox">
+                <input placeholder="搜索" type="text" class="devsite-search-field devsite-search-query" name="q" value="" autocomplete="off" aria-label="搜索框">
+        <div class="devsite-search-image material-icons" aria-hidden="true"></div>
+      </div>
+      <button type="button" search-open="" class="devsite-search-button devsite-header-icon-button button-flat material-icons" aria-label="Open search box"></button>
+    </div>
+  <div class="devsite-popout"><div class="devsite-popout-result devsite-suggest-results-container" devsite-hide="" role="menu" aria-haspopup="true"></div></div></form>
+  <button type="button" search-close="" class="devsite-search-button devsite-header-icon-button button-flat material-icons" aria-label="Close search box"></button>
+</devsite-search>
+
+        <devsite-search-background style="opacity: 1;"></devsite-search-background></div>
+
+        
+        <devsite-language-selector>
+  <devsite-select class="devsite-language-selector-menu">
+    <select class="devsite-language-selector-select" name="language" track-name="click" track-type="languageSelector">
+                <option>Language</option>
+              <option value="id" track-metadata-original-language="zh_cn" track-metadata-selected-language="id" track-name="changed" track-type="languageSelector">
+        Bahasa Indonesia
+      </option>
+          <option value="de" track-metadata-original-language="zh_cn" track-metadata-selected-language="de" track-name="changed" track-type="languageSelector">
+        Deutsch
+      </option>
+          <option value="en" track-metadata-original-language="zh_cn" track-metadata-selected-language="en" track-name="changed" track-type="languageSelector">
+        English
+      </option>
+          <option value="es" track-metadata-original-language="zh_cn" track-metadata-selected-language="es" track-name="changed" track-type="languageSelector">
+        Español
+      </option>
+          <option value="fr" track-metadata-original-language="zh_cn" track-metadata-selected-language="fr" track-name="changed" track-type="languageSelector">
+        Français
+      </option>
+          <option value="pt_br" track-metadata-original-language="zh_cn" track-metadata-selected-language="pt_br" track-name="changed" track-type="languageSelector">
+        Português – Brasil
+      </option>
+          <option value="ru" track-metadata-original-language="zh_cn" track-metadata-selected-language="ru" track-name="changed" track-type="languageSelector">
+        Русский
+      </option>
+          <option value="zh_cn" track-metadata-original-language="zh_cn" track-metadata-selected-language="zh_cn" track-name="changed" track-type="languageSelector">
+        中文 – 简体
+      </option>
+          <option value="ja" track-metadata-original-language="zh_cn" track-metadata-selected-language="ja" track-name="changed" track-type="languageSelector">
+        日本語
+      </option>
+          <option value="ko" track-metadata-original-language="zh_cn" track-metadata-selected-language="ko" track-name="changed" track-type="languageSelector">
+        한국어
+      </option>
+        </select>
+  <div class="devsite-select"><button class="devsite-select-toggle">Language</button><ul class="devsite-select-list" scrollbars=""><li class="devsite-select-item" data-index="0">Language</li><li class="devsite-select-item" data-index="1">Bahasa Indonesia</li><li class="devsite-select-item" data-index="2">Deutsch</li><li class="devsite-select-item" data-index="3">English</li><li class="devsite-select-item" data-index="4">Español</li><li class="devsite-select-item" data-index="5">Français</li><li class="devsite-select-item" data-index="6">Português – Brasil</li><li class="devsite-select-item" data-index="7">Русский</li><li class="devsite-select-item" data-index="8">中文 – 简体</li><li class="devsite-select-item" data-index="9">日本語</li><li class="devsite-select-item" data-index="10">한국어</li></ul></div></devsite-select>
+</devsite-language-selector>
+
+
+        
+                                      <devsite-user signed-in="" sign-in-url="https://developers.google.com/_d/signin?continue=https%3A%2F%2Fdevelopers.google.com%2Fprotocol-buffers%2Fdocs%2Fencoding%3Fcsw%3D1%23varints" sign-out-url="https://developers.google.com/_d/signout?continue=https%3A%2F%2Fdevelopers.google.com%2Fprotocol-buffers%2Fdocs%2Fencoding%3Fcsw%3D1%23varints" url="https://developers.google.com/_d/signin?continue=https%3A%2F%2Fdevelopers.google.com%2Fprotocol-buffers%2Fdocs%2Fencoding%3Fcsw%3D1%23varints"><div class="ogb-wrapper ogb-so"><div class="gb_ja gb_4d gb_Oa gb_ka" id="gb"><div class="gb_Xc gb_Ka gb_Wc" ng-non-bindable="" data-ogsr-up="" style="padding:0;height:auto;display:block"><div class="gb_Zc" style="display:block"><div class="gb_Oc"></div><div class="gb_Ea gb_hd gb_Bg gb_g gb_Mf"><div class="gb_Lf gb_Ja gb_Bg gb_g"><a class="gb_B gb_Da gb_g" aria-label="Google Account: yy l  
+(xiaoheibiubiu@gmail.com)" href="https://accounts.google.com/SignOutOptions?hl=en&amp;continue=https://developers.google.com/_d/profile/ogb" role="button" tabindex="0" aria-expanded="false"><span class="gb_xa gbii cye-lm-tag" aria-hidden="true"></span></a><div class="gb_Ra"></div><div class="gb_Qa"></div></div></div></div><div class="gb_Sa gb_D" aria-label="Account Information" aria-hidden="true"><div class="gb_2a"><a class="gb_7a gb_3a gb_cg" aria-label="Change profile picture." href="https://myaccount.google.com/?utm_source=OGB" target="_blank"><div class="gb_8a" style="position:relative"><div class="gb_ya gbip" title="Profile"></div><span class="gb_Ma cye-lm-tag">Change</span></div></a><div class="gb_4a"><div class="gb_fb gb_gb">yy l</div><div class="gb_hb">xiaoheibiubiu@gmail.com</div><div class="gb_7f gb_1a"><a class="gb_Db" href="https://policies.google.com/privacy?hl=en" target="_blank">Privacy</a></div><a class="gb_0 gb_8f gbp1 gb_Se gb_pb" href="https://myaccount.google.com/?utm_source=OGB&amp;utm_medium=act" target="_blank">Google Account</a></div></div><div class="gb_Bb"><div class="gb_bg gb_Ib gb_va" aria-hidden="true"><a class="gb_Kb gb_Vb" aria-hidden="true" href="https://developers.google.com/protocol-buffers/docs/encoding?authuser=0" rel="noreferrer" target="_blank"><img class="gb_Xb gb_8a" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="Profile" data-src="https://lh3.googleusercontent.com/-I4Pmvi2yUcM/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rdWujgmfttWUh0hF9AT9M7MUnGrKA.CMID/s48-c/photo.jpg"><div class="gb_Nb"><div class="gb_1b">yy l</div><div class="gb_3b">xiaoheibiubiu@gmail.com (default)</div></div></a></div><a class="gb_8b gb_va gb_7b" href="https://myaccount.google.com/brandaccounts?authuser=0&amp;continue=https://developers.google.com/_d/profile/ogb&amp;service=%3Fauthuser%3D%24authuser" aria-hidden="true"><span class="gb_9b gb_sc cye-lm-tag"></span><div class="gb_bc">All your Brand Accounts »</div></a></div><div class="gb_eg gb_hc gb_va"><div class="gb_jc"></div></div><div class="gb_6f gb_ob"><div><a class="gb_0 gb_5f gb_Se gb_pb" href="https://accounts.google.com/AddSession?service=ahsid&amp;continue=" target="_blank">Add account</a></div><div><a class="gb_0 gb_9f gb_hg gb_Se gb_pb" id="gb_71" href="https://accounts.google.com/Logout?continue=https://developers.google.com/&amp;service=ahsid" target="_top">Sign out</a></div></div></div></div></div></div></devsite-user>
+                         </div>    </div>  </div>
+  <div class="devsite-collapsible-section
+    " style="transform: translate3d(0px, -48px, 0px);">
+    <div class="devsite-header-background">
+                                  <div class="devsite-doc-set-nav-row">
+                              <devsite-tabs class="lower-tabs" connected="">
+  
+<div class="devsite-tabs-wrapper">
+                  <tab>
+          <a href="https://developers.google.com/protocol-buffers" class="gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Tab: 首页">
+  首页
+</a>
+
+        </tab>
+                        <tab active="">
+          <a href="https://developers.google.com/protocol-buffers/docs/overview" class="gc-analytics-event" aria-label="指南, selected" data-category="Site-Wide Custom Events" data-label="Tab: 指南">
+  指南
+</a>
+
+        </tab>
+                        <tab>
+          <a href="https://developers.google.com/protocol-buffers/docs/reference/overview" class="gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Tab: 参考">
+  参考
+</a>
+
+        </tab>
+                        <tab>
+          <a href="https://developers.google.com/protocol-buffers/docs/faq" class="gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Tab: 支持">
+  支持
+</a>
+
+        </tab>
+            <tab overflow-tab="" hidden=""><a href="https://developers.google.com/protocol-buffers/docs/encoding?csw=1#" class="devsite-icon devsite-icon-arrow-drop-down">更多</a><div class="devsite-tabs-overflow-menu" scrollbars="" hidden=""></div></tab></div></devsite-tabs>
+
+
+        </div>
+          </div>  </div></div>
+
+  </devsite-header>      <div class="devsite-book-nav-bg" fixed=""></div><devsite-book-nav scrollbars="" animatable="" fixed="" style="top: 96px; max-height: 618px; transform: translate3d(0px, -48px, 0px);">
+                  
+
+
+
+
+<nav class="devsite-book-nav devsite-nav nocontent">
+  <div class="devsite-mobile-header">
+    <button type="button" id="devsite-close-nav" class="devsite-header-icon-button button-flat material-icons gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Close navigation" aria-label="Close navigation">
+    </button>
+    <div class="devsite-product-name-wrapper">
+      
+          <span class="devsite-product-name cye-lm-tag">
+        <ul class="devsite-breadcrumb-list">
+    <li class="devsite-breadcrumb-item
+             ">
+                                  <a href="https://developers.google.com/protocol-buffers" class="devsite-breadcrumb-link gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Upper Header" data-value="1">
+              Protocol Buffers        
+  </a>
+              </li>
+  </ul>
+      </span>
+    
+</div>  </div>
+
+  <div class="devsite-book-nav-wrapper">
+    <div class="devsite-mobile-nav-top">
+              <ul class="devsite-nav-list">
+                      <li class="devsite-nav-item">
+    <a href="https://developers.google.com/protocol-buffers" class="devsite-nav-title gc-analytics-event
+                        " data-category="Site-Wide Custom Events" data-label="Responsive Tab: 首页"><span class="cye-lm-tag">
+      </span><span class="devsite-nav-text cye-lm-tag"><span class="cye-lm-tag">首页</span></span><span class="cye-lm-tag">
+        </span></a>
+  </li>
+
+                      <li class="devsite-nav-item">
+    <a href="https://developers.google.com/protocol-buffers/docs/overview" class="devsite-nav-title gc-analytics-event
+            devsite-nav-has-children            " data-category="Site-Wide Custom Events" data-label="Responsive Tab: 指南"><span class="cye-lm-tag">
+      </span><span class="devsite-nav-text cye-lm-tag"><span class="cye-lm-tag">指南</span></span><span class="cye-lm-tag">
+        </span><span class="devsite-nav-icon material-icons cye-lm-tag" data-icon="forward" aria-hidden="true"><span class="cye-lm-tag">
+    </span></span><span class="cye-lm-tag">
+        </span></a>
+  </li>
+
+                      <li class="devsite-nav-item">
+    <a href="https://developers.google.com/protocol-buffers/docs/reference/overview" class="devsite-nav-title gc-analytics-event
+                        " data-category="Site-Wide Custom Events" data-label="Responsive Tab: 参考"><span class="cye-lm-tag">
+      </span><span class="devsite-nav-text cye-lm-tag"><span class="cye-lm-tag">参考</span></span><span class="cye-lm-tag">
+        </span></a>
+  </li>
+
+                      <li class="devsite-nav-item">
+    <a href="https://developers.google.com/protocol-buffers/docs/faq" class="devsite-nav-title gc-analytics-event
+                        " data-category="Site-Wide Custom Events" data-label="Responsive Tab: 支持"><span class="cye-lm-tag">
+      </span><span class="devsite-nav-text cye-lm-tag"><span class="cye-lm-tag">支持</span></span><span class="cye-lm-tag">
+        </span></a>
+  </li>
+
+                    
+        </ul>
+          </div>
+          <div class="devsite-mobile-nav-bottom">
+                            <ul class="devsite-nav-list" menu="_book">
+            <li class="devsite-nav-item"><a href="https://developers.google.com/protocol-buffers/docs/overview" class="devsite-nav-title"><span class="devsite-nav-text cye-lm-tag"><span class="cye-lm-tag">Overview</span></span></a></li>
+  <li class="devsite-nav-item           devsite-nav-heading"><div class="devsite-nav-title devsite-nav-title-no-path"><span class="devsite-nav-text cye-lm-tag"><span class="cye-lm-tag">Developer Guide</span></span></div><ul class="devsite-nav-section"><li class="devsite-nav-item"><a href="https://developers.google.com/protocol-buffers/docs/proto" class="devsite-nav-title"><span class="devsite-nav-text cye-lm-tag"><span class="cye-lm-tag">Language Guide (proto2)</span></span></a></li><li class="devsite-nav-item"><a href="https://developers.google.com/protocol-buffers/docs/proto3" class="devsite-nav-title"><span class="devsite-nav-text cye-lm-tag"><span class="cye-lm-tag">Language Guide (proto3)</span></span></a></li><li class="devsite-nav-item"><a href="https://developers.google.com/protocol-buffers/docs/style" class="devsite-nav-title"><span class="devsite-nav-text cye-lm-tag"><span class="cye-lm-tag">Style Guide</span></span></a></li><li class="devsite-nav-item"><a href="https://developers.google.com/protocol-buffers/docs/encoding" class="devsite-nav-title devsite-nav-active"><span class="devsite-nav-text cye-lm-tag"><span class="cye-lm-tag">Encoding</span></span></a></li><li class="devsite-nav-item"><a href="https://developers.google.com/protocol-buffers/docs/techniques" class="devsite-nav-title"><span class="devsite-nav-text cye-lm-tag"><span class="cye-lm-tag">Techniques</span></span></a></li><li class="devsite-nav-item"><a href="https://developers.google.com/protocol-buffers/docs/addons" class="devsite-nav-title"><span class="devsite-nav-text cye-lm-tag"><span class="cye-lm-tag">Add-ons</span></span></a></li></ul></li>
+  <li class="devsite-nav-item           devsite-nav-heading"><div class="devsite-nav-title devsite-nav-title-no-path"><span class="devsite-nav-text cye-lm-tag"><span class="cye-lm-tag">Tutorials</span></span></div><ul class="devsite-nav-section"><li class="devsite-nav-item"><a href="https://developers.google.com/protocol-buffers/docs/tutorials" class="devsite-nav-title"><span class="devsite-nav-text cye-lm-tag"><span class="cye-lm-tag">Tutorials Overview</span></span></a></li><li class="devsite-nav-item"><a href="https://developers.google.com/protocol-buffers/docs/cpptutorial" class="devsite-nav-title"><span class="devsite-nav-text cye-lm-tag"><span class="cye-lm-tag">Basics: C++</span></span></a></li><li class="devsite-nav-item"><a href="https://developers.google.com/protocol-buffers/docs/csharptutorial" class="devsite-nav-title"><span class="devsite-nav-text cye-lm-tag"><span class="cye-lm-tag">Basics: C#</span></span></a></li><li class="devsite-nav-item"><a href="https://developers.google.com/protocol-buffers/docs/darttutorial" class="devsite-nav-title"><span class="devsite-nav-text cye-lm-tag"><span class="cye-lm-tag">Basics: Dart</span></span></a></li><li class="devsite-nav-item"><a href="https://developers.google.com/protocol-buffers/docs/gotutorial" class="devsite-nav-title"><span class="devsite-nav-text cye-lm-tag"><span class="cye-lm-tag">Basics: Go</span></span></a></li><li class="devsite-nav-item"><a href="https://developers.google.com/protocol-buffers/docs/javatutorial" class="devsite-nav-title"><span class="devsite-nav-text cye-lm-tag"><span class="cye-lm-tag">Basics: Java</span></span></a></li><li class="devsite-nav-item"><a href="https://developers.google.com/protocol-buffers/docs/pythontutorial" class="devsite-nav-title"><span class="devsite-nav-text cye-lm-tag"><span class="cye-lm-tag">Basics: Python</span></span></a></li></ul></li>
+  <li class="devsite-nav-item           devsite-nav-heading"><div class="devsite-nav-title devsite-nav-title-no-path"><span class="devsite-nav-text cye-lm-tag"><span class="cye-lm-tag">Related Guides</span></span></div><ul class="devsite-nav-section"><li class="devsite-nav-item           devsite-nav-external"><a href="http://www.grpc.io/docs/" class="devsite-nav-title"><span class="devsite-nav-text cye-lm-tag"><span class="cye-lm-tag">gRPC</span></span><span class="devsite-nav-icon material-icons cye-lm-tag" data-icon="external" aria-hidden="true" data-title="外部"></span></a></li></ul></li>
+          </ul>
+                      </div>
+      </div>
+</nav>
+              </devsite-book-nav>
+      <div id="gc-wrapper" style="margin-top: 96px;" class="cye-lm-tag">
+        <div class="devsite-main-content cye-lm-tag" has-book-nav="" has-toc="">
+          <devsite-toc class="devsite-nav devsite-toc" fixed="" max-height="570" offset="48" visible=""><ul class="devsite-nav-list" scrollbars="" style="max-height: 570px; transform: translate3d(0px, -48px, 0px); max-width: 243px;"><li class="devsite-nav-item devsite-nav-heading devsite-toc-toggle"><a href="https://developers.google.com/protocol-buffers/docs/encoding?csw=1#top_of_page" class="devsite-nav-title"><span class="devsite-nav-text cye-lm-tag">目录</span></a></li><li class="devsite-nav-item"><a href="https://developers.google.com/protocol-buffers/docs/encoding?csw=1#simple" class="devsite-nav-title"><span class="devsite-nav-text cye-lm-tag">A Simple Message</span></a></li><li class="devsite-nav-item"><a href="https://developers.google.com/protocol-buffers/docs/encoding?csw=1#varints" class="devsite-nav-title"><span class="devsite-nav-text cye-lm-tag">Base 128 Varints</span></a></li><li class="devsite-nav-item"><a href="https://developers.google.com/protocol-buffers/docs/encoding?csw=1#structure" class="devsite-nav-title"><span class="devsite-nav-text cye-lm-tag">Message Structure</span></a></li><li class="devsite-nav-item"><a href="https://developers.google.com/protocol-buffers/docs/encoding?csw=1#types" class="devsite-nav-title"><span class="devsite-nav-text cye-lm-tag">More Value Types</span></a><ul class="devsite-nav-list"><li class="devsite-nav-item"><a href="https://developers.google.com/protocol-buffers/docs/encoding?csw=1#signed-integers" class="devsite-nav-title gc-analytics-event" data-category="Site-Wide Custom Events" data-action="click" data-label="Right nav" data-value="3.0"><span class="devsite-nav-text cye-lm-tag">Signed Integers</span></a></li><li class="devsite-nav-item"><a href="https://developers.google.com/protocol-buffers/docs/encoding?csw=1#non-varint-numbers" class="devsite-nav-title gc-analytics-event" data-category="Site-Wide Custom Events" data-action="click" data-label="Right nav" data-value="3.1"><span class="devsite-nav-text cye-lm-tag">Non-varint Numbers</span></a></li><li class="devsite-nav-item"><a href="https://developers.google.com/protocol-buffers/docs/encoding?csw=1#strings" class="devsite-nav-title gc-analytics-event" data-category="Site-Wide Custom Events" data-action="click" data-label="Right nav" data-value="3.2"><span class="devsite-nav-text cye-lm-tag">Strings</span></a></li></ul></li><li class="devsite-nav-item"><a href="https://developers.google.com/protocol-buffers/docs/encoding?csw=1#embedded" class="devsite-nav-title"><span class="devsite-nav-text cye-lm-tag">Embedded Messages</span></a></li><li class="devsite-nav-item"><a href="https://developers.google.com/protocol-buffers/docs/encoding?csw=1#optional" class="devsite-nav-title"><span class="devsite-nav-text cye-lm-tag">Optional And Repeated Elements</span></a><ul class="devsite-nav-list"><li class="devsite-nav-item"><a href="https://developers.google.com/protocol-buffers/docs/encoding?csw=1#packed" class="devsite-nav-title gc-analytics-event" data-category="Site-Wide Custom Events" data-action="click" data-label="Right nav" data-value="5.0"><span class="devsite-nav-text cye-lm-tag">Packed Repeated Fields</span></a></li></ul></li><li class="devsite-nav-item"><a href="https://developers.google.com/protocol-buffers/docs/encoding?csw=1#order" class="devsite-nav-title"><span class="devsite-nav-text cye-lm-tag">Field Order</span></a><ul class="devsite-nav-list"><li class="devsite-nav-item"><a href="https://developers.google.com/protocol-buffers/docs/encoding?csw=1#implications" class="devsite-nav-title gc-analytics-event" data-category="Site-Wide Custom Events" data-action="click" data-label="Right nav" data-value="6.0"><span class="devsite-nav-text cye-lm-tag">Implications</span></a></li></ul></li></ul></devsite-toc>
+          <devsite-content class="cye-lm-tag">
+                          
+
+<article class="devsite-article cye-lm-tag">
+  <article class="devsite-article-inner cye-lm-tag">        
+    <div class="devsite-article-meta">
+      <ul class="devsite-breadcrumb-list">
+    <li class="devsite-breadcrumb-item
+             ">
+                    <a href="https://developers.google.com/" class="devsite-breadcrumb-link gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Breadcrumbs" data-value="1">
+            首页
+      
+  </a>
+        </li>
+    <li class="devsite-breadcrumb-item
+             ">
+                <div class="devsite-breadcrumb-guillemet material-icons" aria-hidden="true"></div>
+                    <a href="https://developers.google.com/products" class="devsite-breadcrumb-link gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Breadcrumbs" data-value="2">
+            产品
+      
+  </a>
+        </li>
+    <li class="devsite-breadcrumb-item
+             ">
+                <div class="devsite-breadcrumb-guillemet material-icons" aria-hidden="true"></div>
+                    <a href="https://developers.google.com/protocol-buffers" class="devsite-breadcrumb-link gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Breadcrumbs" data-value="3">
+            Protocol Buffers
+      
+  </a>
+        </li>
+    <li class="devsite-breadcrumb-item
+             ">
+                <div class="devsite-breadcrumb-guillemet material-icons" aria-hidden="true"></div>
+                    <a href="https://developers.google.com/protocol-buffers/docs/overview" class="devsite-breadcrumb-link gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Breadcrumbs" data-value="4">
+            指南
+      
+  </a>
+        </li>
+  </ul>
+               <devsite-page-rating position="header" selected-rating="0" hover-rating-star="0">
+         <div><div class="devsite-rating-stars"><div class="devsite-rating-star devsite-rating-star-outline gc-analytics-event material-icons" data-rating-val="1" role="button" data-title="文档根本没法用" aria-label="Site content star ratings, rating 1 out of 5"></div><div class="devsite-rating-star devsite-rating-star-outline gc-analytics-event material-icons" data-rating-val="2" role="button" data-title="文档水平很差" aria-label="Site content star ratings, rating 2 out of 5"></div><div class="devsite-rating-star devsite-rating-star-outline gc-analytics-event material-icons" data-rating-val="3" role="button" data-title="文档水平一般" aria-label="Site content star ratings, rating 3 out of 5"></div><div class="devsite-rating-star devsite-rating-star-outline gc-analytics-event material-icons" data-rating-val="4" role="button" data-title="文档不错" aria-label="Site content star ratings, rating 4 out of 5"></div><div class="devsite-rating-star devsite-rating-star-outline gc-analytics-event material-icons" data-rating-val="5" role="button" data-title="文档写得很好" aria-label="Site content star ratings, rating 5 out of 5"></div></div><div class="devsite-rating-internal"><span class="devsite-rating-stats cye-lm-tag"></span></div></div></devsite-page-rating>
+          </div>
+
+              <devsite-heading text="Encoding" for="encoding" level="h1" class="cye-lm-tag"><h1 class="devsite-page-title cye-lm-tag" is-upgraded="" id="encoding">Encoding</h1></devsite-heading>
+    
+    <devsite-toc class="devsite-nav devsite-toc-embedded" devsite-toc-embedded="" expandable="" visible=""><ul class="devsite-nav-list" scrollbars=""><li class="devsite-nav-item devsite-nav-heading devsite-toc-toggle"><a href="https://developers.google.com/protocol-buffers/docs/encoding?csw=1#top_of_page" class="devsite-nav-title"><span class="devsite-nav-text cye-lm-tag">目录</span></a><button type="button" class="devsite-nav-show-all button-transparent material-icons" data-title="展开/收起内容"></button></li><li class="devsite-nav-item"><a href="https://developers.google.com/protocol-buffers/docs/encoding?csw=1#simple" class="devsite-nav-title"><span class="devsite-nav-text cye-lm-tag">A Simple Message</span></a></li><li class="devsite-nav-item"><a href="https://developers.google.com/protocol-buffers/docs/encoding?csw=1#varints" class="devsite-nav-title"><span class="devsite-nav-text cye-lm-tag">Base 128 Varints</span></a></li><li class="devsite-nav-item"><a href="https://developers.google.com/protocol-buffers/docs/encoding?csw=1#structure" class="devsite-nav-title"><span class="devsite-nav-text cye-lm-tag">Message Structure</span></a></li><li class="devsite-nav-item"><a href="https://developers.google.com/protocol-buffers/docs/encoding?csw=1#types" class="devsite-nav-title"><span class="devsite-nav-text cye-lm-tag">More Value Types</span></a><ul class="devsite-nav-list"><li class="devsite-nav-item" hidden=""><a href="https://developers.google.com/protocol-buffers/docs/encoding?csw=1#signed-integers" class="devsite-nav-title gc-analytics-event" data-category="Site-Wide Custom Events" data-action="click" data-label="Embedded nav" data-value="3.0"><span class="devsite-nav-text cye-lm-tag">Signed Integers</span></a></li><li class="devsite-nav-item" hidden=""><a href="https://developers.google.com/protocol-buffers/docs/encoding?csw=1#non-varint-numbers" class="devsite-nav-title gc-analytics-event" data-category="Site-Wide Custom Events" data-action="click" data-label="Embedded nav" data-value="3.1"><span class="devsite-nav-text cye-lm-tag">Non-varint Numbers</span></a></li><li class="devsite-nav-item" hidden=""><a href="https://developers.google.com/protocol-buffers/docs/encoding?csw=1#strings" class="devsite-nav-title gc-analytics-event" data-category="Site-Wide Custom Events" data-action="click" data-label="Embedded nav" data-value="3.2"><span class="devsite-nav-text cye-lm-tag">Strings</span></a></li></ul></li><li class="devsite-nav-item" hidden=""><a href="https://developers.google.com/protocol-buffers/docs/encoding?csw=1#embedded" class="devsite-nav-title"><span class="devsite-nav-text cye-lm-tag">Embedded Messages</span></a></li><li class="devsite-nav-item" hidden=""><a href="https://developers.google.com/protocol-buffers/docs/encoding?csw=1#optional" class="devsite-nav-title"><span class="devsite-nav-text cye-lm-tag">Optional And Repeated Elements</span></a><ul class="devsite-nav-list"><li class="devsite-nav-item" hidden=""><a href="https://developers.google.com/protocol-buffers/docs/encoding?csw=1#packed" class="devsite-nav-title gc-analytics-event" data-category="Site-Wide Custom Events" data-action="click" data-label="Embedded nav" data-value="5.0"><span class="devsite-nav-text cye-lm-tag">Packed Repeated Fields</span></a></li></ul></li><li class="devsite-nav-item" hidden=""><a href="https://developers.google.com/protocol-buffers/docs/encoding?csw=1#order" class="devsite-nav-title"><span class="devsite-nav-text cye-lm-tag">Field Order</span></a><ul class="devsite-nav-list"><li class="devsite-nav-item" hidden=""><a href="https://developers.google.com/protocol-buffers/docs/encoding?csw=1#implications" class="devsite-nav-title gc-analytics-event" data-category="Site-Wide Custom Events" data-action="click" data-label="Embedded nav" data-value="6.0"><span class="devsite-nav-text cye-lm-tag">Implications</span></a></li></ul></li><li class="devsite-toc-toggle"><button type="button" class="button-flat devsite-nav-more-items material-icons" aria-hidden="true" data-title="展开/收起内容"></button></li></ul></devsite-toc>
+
+    <div class="devsite-article-body clearfix
+      ">
+
+              
+
+
+<ul style="list-style-type: none"><li>
+</li><li><a href="https://developers.google.com/protocol-buffers/docs/encoding?csw=1#simple">A Simple Message</a>
+</li><li><a href="https://developers.google.com/protocol-buffers/docs/encoding?csw=1#varints">Base 128 Varints</a>
+</li><li><a href="https://developers.google.com/protocol-buffers/docs/encoding?csw=1#structure">Message Structure</a>
+</li><li><a href="https://developers.google.com/protocol-buffers/docs/encoding?csw=1#types">More Value Types</a>
+</li><li><a href="https://developers.google.com/protocol-buffers/docs/encoding?csw=1#embedded">Embedded Messages</a>
+
+</li><li><a href="https://developers.google.com/protocol-buffers/docs/encoding?csw=1#optional">Optional And Repeated Elements</a>
+</li><li><a href="https://developers.google.com/protocol-buffers/docs/encoding?csw=1#order">Field Order</a>
+</li></ul>
+<p class="cye-lm-tag">This document describes the binary wire format for protocol buffer messages.  You don't need to understand this to use protocol buffers in your applications, but it can be very useful to know how different protocol buffer formats affect the size of your encoded messages.
+</p><devsite-heading text="A Simple Message" for="simple" level="h2" link="" toc="" back-to-top=""><h2 id="simple" is-upgraded="">A Simple Message<button role="button" class="devsite-heading-link button-flat material-icons" data-title="Copy link to this section"></button><a href="https://developers.google.com/protocol-buffers/docs/encoding?csw=1#top_of_page" class="devsite-back-to-top-link material-icons" data-title="返回页首"></a></h2></devsite-heading>
+<p class="cye-lm-tag">Let's say you have the following very simple message definition:
+</p><devsite-code no-copy=""><pre translate="no" dir="ltr" is-upgraded="">message Test1 {
+  optional int32 a = 1;
+}</pre><div class="devsite-code-buttons-container"><button class="gc-analytics-event material-icons devsite-icon-code-dark devsite-toggle-dark" data-category="Site-Wide Custom Events" data-label="Dark Code Toggle" track-type="exampleCode" track-name="darkCodeToggle" data-title="Dark code theme"></button><button class="gc-analytics-event material-icons devsite-icon-code-light devsite-toggle-light" data-category="Site-Wide Custom Events" data-label="Light Code Toggle" track-type="exampleCode" track-name="lightCodeToggle" data-title="Light code theme"></button></div></devsite-code>
+<p class="cye-lm-tag">In an application, you create a <code translate="no" dir="ltr">Test1</code> message and set <code translate="no" dir="ltr">a</code> to 150.  You then serialize the message to an output stream.  If you were able to examine the encoded message, you'd see three bytes:
+</p><devsite-code no-copy=""><pre translate="no" dir="ltr" is-upgraded="">08 96 01</pre><div class="devsite-code-buttons-container"><button class="gc-analytics-event material-icons devsite-icon-code-dark devsite-toggle-dark" data-category="Site-Wide Custom Events" data-label="Dark Code Toggle" track-type="exampleCode" track-name="darkCodeToggle" data-title="Dark code theme"></button><button class="gc-analytics-event material-icons devsite-icon-code-light devsite-toggle-light" data-category="Site-Wide Custom Events" data-label="Light Code Toggle" track-type="exampleCode" track-name="lightCodeToggle" data-title="Light code theme"></button></div></devsite-code>
+<p class="cye-lm-tag">So far, so small and numeric – but what does it mean?  Read on...
+</p><devsite-heading text="Base 128 Varints" for="varints" level="h2" link="" toc="" back-to-top=""><h2 id="varints" is-upgraded="">Base 128 Varints<button role="button" class="devsite-heading-link button-flat material-icons" data-title="Copy link to this section"></button><a href="https://developers.google.com/protocol-buffers/docs/encoding?csw=1#top_of_page" class="devsite-back-to-top-link material-icons" data-title="返回页首"></a></h2></devsite-heading>
+<p class="cye-lm-tag">To understand your simple protocol buffer encoding, you first need to understand <em>varints</em>.  Varints are a method of serializing integers using one or more bytes.  Smaller numbers take a smaller number of bytes.
+</p><p class="cye-lm-tag">Each byte in a varint, except the last byte, has the <em>most significant bit</em> (msb) set – this indicates that there are further bytes to come.  The lower 7 bits of each byte are used to store the two's complement representation of the number in groups of 7 bits, <strong>least significant group first</strong>.
+</p><p class="cye-lm-tag">So, for example, here is the number 1 – it's a single byte, so the msb is not set:
+</p><devsite-code no-copy=""><pre translate="no" dir="ltr" is-upgraded="">0000 0001</pre><div class="devsite-code-buttons-container"><button class="gc-analytics-event material-icons devsite-icon-code-dark devsite-toggle-dark" data-category="Site-Wide Custom Events" data-label="Dark Code Toggle" track-type="exampleCode" track-name="darkCodeToggle" data-title="Dark code theme"></button><button class="gc-analytics-event material-icons devsite-icon-code-light devsite-toggle-light" data-category="Site-Wide Custom Events" data-label="Light Code Toggle" track-type="exampleCode" track-name="lightCodeToggle" data-title="Light code theme"></button></div></devsite-code>
+<p class="cye-lm-tag">And here is 300 – this is a bit more complicated:
+</p><devsite-code no-copy=""><pre translate="no" dir="ltr" is-upgraded="">1010 1100 0000 0010</pre><div class="devsite-code-buttons-container"><button class="gc-analytics-event material-icons devsite-icon-code-dark devsite-toggle-dark" data-category="Site-Wide Custom Events" data-label="Dark Code Toggle" track-type="exampleCode" track-name="darkCodeToggle" data-title="Dark code theme"></button><button class="gc-analytics-event material-icons devsite-icon-code-light devsite-toggle-light" data-category="Site-Wide Custom Events" data-label="Light Code Toggle" track-type="exampleCode" track-name="lightCodeToggle" data-title="Light code theme"></button></div></devsite-code>
+<p class="cye-lm-tag">How do you figure out that this is 300?  First you drop the msb from each byte, as this is just there to tell us whether we've reached the end of the number (as you can see, it's set in the first byte as there is more than one byte in the varint):
+</p><devsite-code no-copy=""><pre translate="no" dir="ltr" is-upgraded=""> 1010 1100 0000 0010
+→ 010 1100  000 0010</pre><div class="devsite-code-buttons-container"><button class="gc-analytics-event material-icons devsite-icon-code-dark devsite-toggle-dark" data-category="Site-Wide Custom Events" data-label="Dark Code Toggle" track-type="exampleCode" track-name="darkCodeToggle" data-title="Dark code theme"></button><button class="gc-analytics-event material-icons devsite-icon-code-light devsite-toggle-light" data-category="Site-Wide Custom Events" data-label="Light Code Toggle" track-type="exampleCode" track-name="lightCodeToggle" data-title="Light code theme"></button></div></devsite-code>
+<p class="cye-lm-tag">You reverse the two groups of 7 bits because, as you remember, varints store numbers with the least significant group first.  Then you concatenate them to get your final value:
+</p><devsite-code no-copy=""><pre translate="no" dir="ltr" is-upgraded="">000 0010  010 1100
+→  000 0010 ++ 010 1100
+→  100101100
+→  256 + 32 + 8 + 4 = 300</pre><div class="devsite-code-buttons-container"><button class="gc-analytics-event material-icons devsite-icon-code-dark devsite-toggle-dark" data-category="Site-Wide Custom Events" data-label="Dark Code Toggle" track-type="exampleCode" track-name="darkCodeToggle" data-title="Dark code theme"></button><button class="gc-analytics-event material-icons devsite-icon-code-light devsite-toggle-light" data-category="Site-Wide Custom Events" data-label="Light Code Toggle" track-type="exampleCode" track-name="lightCodeToggle" data-title="Light code theme"></button></div></devsite-code>
+<devsite-heading text="Message Structure" for="structure" level="h2" link="" toc="" back-to-top=""><h2 id="structure" is-upgraded="">Message Structure<button role="button" class="devsite-heading-link button-flat material-icons" data-title="Copy link to this section"></button><a href="https://developers.google.com/protocol-buffers/docs/encoding?csw=1#top_of_page" class="devsite-back-to-top-link material-icons" data-title="返回页首"></a></h2></devsite-heading>
+<p class="cye-lm-tag">As you know, a protocol buffer message is a series of key-value pairs.  The binary version of a message just uses the field's number as the key – the name and declared type for each field can only be determined on the decoding end by referencing the message type's definition (i.e. the <code translate="no" dir="ltr">.proto</code> file).
+</p><p class="cye-lm-tag">When a message is encoded, the keys and values are concatenated into a byte stream. When the message is being decoded, the parser needs to be able to skip fields that it doesn't recognize. This way, new fields can be added to a message without breaking old programs that do not know about them. To this end, the "key" for each pair in a wire-format message is actually two values – the field number from your <code translate="no" dir="ltr">.proto</code> file, plus a <em>wire type</em> that provides just enough information to find the length of the following value. In most language implementations this key is referred to as a tag.
+</p><p class="cye-lm-tag">The available wire types are as follows:
+</p><div class="devsite-table-wrapper"><table width="50%" border="1">
+<tbody><tr><th>Type</th><th>Meaning</th><th>Used For</th></tr>
+<tr><td>0</td><td>Varint</td><td>int32, int64, uint32, uint64, sint32, sint64, bool, enum</td></tr><tr>
+</tr><tr><td>1</td><td>64-bit</td><td>fixed64, sfixed64, double</td></tr><tr>
+</tr><tr><td>2</td><td>Length-delimited</td><td>string, bytes, embedded messages, packed repeated fields</td></tr><tr>
+</tr><tr><td>3</td><td>Start group</td><td>groups (deprecated)</td></tr><tr>
+</tr><tr><td>4</td><td>End group</td><td>groups (deprecated)</td></tr><tr>
+</tr><tr><td>5</td><td>32-bit</td><td>fixed32, sfixed32, float</td></tr><tr>
+</tr></tbody></table></div>
+<p class="cye-lm-tag">Each key in the streamed message is a varint with the value <code translate="no" dir="ltr">(field_number &lt;&lt; 3) | wire_type</code> – in other words, the last three bits of the number store the wire type.
+</p><p class="cye-lm-tag">Now let's look at our simple example again.  You now know that the first number in the stream is always a varint key, and here it's 08, or (dropping the msb):
+</p><devsite-code no-copy=""><pre translate="no" dir="ltr" is-upgraded="">000 1000</pre><div class="devsite-code-buttons-container"><button class="gc-analytics-event material-icons devsite-icon-code-dark devsite-toggle-dark" data-category="Site-Wide Custom Events" data-label="Dark Code Toggle" track-type="exampleCode" track-name="darkCodeToggle" data-title="Dark code theme"></button><button class="gc-analytics-event material-icons devsite-icon-code-light devsite-toggle-light" data-category="Site-Wide Custom Events" data-label="Light Code Toggle" track-type="exampleCode" track-name="lightCodeToggle" data-title="Light code theme"></button></div></devsite-code>
+<p class="cye-lm-tag">You take the last three bits to get the wire type (0) and then right-shift by three to get the field number (1). So you now know that the field number is 1 and the following value is a varint.  Using your varint-decoding knowledge from the previous section, you can see that the next two bytes store the value 150.
+</p><devsite-code no-copy=""><pre translate="no" dir="ltr" is-upgraded="">96 01 = 1001 0110  0000 0001
+       → 000 0001  ++  001 0110 (drop the msb and reverse the groups of 7 bits)
+       → 10010110
+       → 128 + 16 + 4 + 2 = 150</pre><div class="devsite-code-buttons-container"><button class="gc-analytics-event material-icons devsite-icon-code-dark devsite-toggle-dark" data-category="Site-Wide Custom Events" data-label="Dark Code Toggle" track-type="exampleCode" track-name="darkCodeToggle" data-title="Dark code theme"></button><button class="gc-analytics-event material-icons devsite-icon-code-light devsite-toggle-light" data-category="Site-Wide Custom Events" data-label="Light Code Toggle" track-type="exampleCode" track-name="lightCodeToggle" data-title="Light code theme"></button></div></devsite-code>
+<devsite-heading text="More Value Types" for="types" level="h2" link="" toc="" back-to-top=""><h2 id="types" is-upgraded="">More Value Types<button role="button" class="devsite-heading-link button-flat material-icons" data-title="Copy link to this section"></button><a href="https://developers.google.com/protocol-buffers/docs/encoding?csw=1#top_of_page" class="devsite-back-to-top-link material-icons" data-title="返回页首"></a></h2></devsite-heading>
+<devsite-heading text="Signed Integers" for="signed-integers" level="h3" link="" toc=""><h3 is-upgraded="" id="signed-integers">Signed Integers<button role="button" class="devsite-heading-link button-flat material-icons" data-title="Copy link to this section"></button></h3></devsite-heading>
+<p class="cye-lm-tag">As you saw in the previous section, all the protocol buffer types associated with wire type 0 are encoded as varints.  However, there is an important difference between the signed int types (<code translate="no" dir="ltr">sint32</code> and <code translate="no" dir="ltr">sint64</code>) and the "standard" int types (<code translate="no" dir="ltr">int32</code> and <code translate="no" dir="ltr">int64</code>) when it comes to encoding negative numbers. If you use <code translate="no" dir="ltr">int32</code> or <code translate="no" dir="ltr">int64</code> as the type for a negative number, the resulting varint is <em>always ten bytes long</em> – it is, effectively, treated like a very large unsigned integer.  If you use one of the signed types, the resulting varint uses ZigZag encoding, which is much more efficient.
+</p><p class="cye-lm-tag">ZigZag encoding maps signed integers to unsigned integers so that numbers with a small <em>absolute value</em> (for instance, -1) have a small varint encoded value too. It does this in a way that "zig-zags" back and forth through the positive and negative integers, so that -1 is encoded as 1, 1 is encoded as 2, -2 is encoded as 3, and so on, as you can see in the following table:
+</p><div class="devsite-table-wrapper"><table width="50%" border="1">
+<tbody><tr><th>Signed Original</th><th>Encoded As</th></tr>
+<tr><td>0</td><td>0</td></tr><tr>
+</tr><tr><td>-1</td><td>1</td></tr><tr>
+</tr><tr><td>1</td><td>2</td></tr><tr>
+</tr><tr><td>-2</td><td>3</td></tr><tr>
+</tr><tr><td>2147483647</td><td>4294967294</td></tr><tr>
+</tr><tr><td>-2147483648</td><td>4294967295</td></tr><tr>
+</tr></tbody></table></div>
+<p class="cye-lm-tag">In other words, each value <code translate="no" dir="ltr">n</code> is encoded using
+</p><devsite-code><pre class="" translate="no" dir="ltr" is-upgraded=""><span class="pun cye-lm-tag">(</span><span class="pln cye-lm-tag">n </span><span class="pun cye-lm-tag">&lt;&lt;</span><span class="pln cye-lm-tag"> </span><span class="lit cye-lm-tag">1</span><span class="pun cye-lm-tag">)</span><span class="pln cye-lm-tag"> </span><span class="pun cye-lm-tag">^</span><span class="pln cye-lm-tag"> </span><span class="pun cye-lm-tag">(</span><span class="pln cye-lm-tag">n </span><span class="pun cye-lm-tag">&gt;&gt;</span><span class="pln cye-lm-tag"> </span><span class="lit cye-lm-tag">31</span><span class="pun cye-lm-tag">)</span></pre><div class="devsite-code-buttons-container"><button class="gc-analytics-event material-icons devsite-icon-code-dark devsite-toggle-dark" data-category="Site-Wide Custom Events" data-label="Dark Code Toggle" track-type="exampleCode" track-name="darkCodeToggle" data-title="Dark code theme"></button><button class="gc-analytics-event material-icons devsite-icon-code-light devsite-toggle-light" data-category="Site-Wide Custom Events" data-label="Light Code Toggle" track-type="exampleCode" track-name="lightCodeToggle" data-title="Light code theme"></button><button class="gc-analytics-event material-icons devsite-icon-copy" data-category="Site-Wide Custom Events" data-label="Click To Copy" track-type="exampleCode" track-name="clickToCopy" data-title="Copy"></button></div></devsite-code>
+<p class="cye-lm-tag">for <code translate="no" dir="ltr">sint32</code>s, or
+</p><devsite-code><pre class="" translate="no" dir="ltr" is-upgraded=""><span class="pun cye-lm-tag">(</span><span class="pln cye-lm-tag">n </span><span class="pun cye-lm-tag">&lt;&lt;</span><span class="pln cye-lm-tag"> </span><span class="lit cye-lm-tag">1</span><span class="pun cye-lm-tag">)</span><span class="pln cye-lm-tag"> </span><span class="pun cye-lm-tag">^</span><span class="pln cye-lm-tag"> </span><span class="pun cye-lm-tag">(</span><span class="pln cye-lm-tag">n </span><span class="pun cye-lm-tag">&gt;&gt;</span><span class="pln cye-lm-tag"> </span><span class="lit cye-lm-tag">63</span><span class="pun cye-lm-tag">)</span></pre><div class="devsite-code-buttons-container"><button class="gc-analytics-event material-icons devsite-icon-code-dark devsite-toggle-dark" data-category="Site-Wide Custom Events" data-label="Dark Code Toggle" track-type="exampleCode" track-name="darkCodeToggle" data-title="Dark code theme"></button><button class="gc-analytics-event material-icons devsite-icon-code-light devsite-toggle-light" data-category="Site-Wide Custom Events" data-label="Light Code Toggle" track-type="exampleCode" track-name="lightCodeToggle" data-title="Light code theme"></button><button class="gc-analytics-event material-icons devsite-icon-copy" data-category="Site-Wide Custom Events" data-label="Click To Copy" track-type="exampleCode" track-name="clickToCopy" data-title="Copy"></button></div></devsite-code>
+<p class="cye-lm-tag">for the 64-bit version.
+</p><p class="cye-lm-tag">Note that the second shift – the <code translate="no" dir="ltr">(n &gt;&gt; 31)</code> part – is an arithmetic shift.  So, in other words, the result of the shift is either a number that is all zero bits (if <code translate="no" dir="ltr">n</code> is positive) or all one bits (if <code translate="no" dir="ltr">n</code> is negative).
+</p><p class="cye-lm-tag">When the <code translate="no" dir="ltr">sint32</code> or <code translate="no" dir="ltr">sint64</code> is parsed, its value is decoded back to the original, signed version.
+</p><devsite-heading text="Non-varint Numbers" for="non-varint-numbers" level="h3" link="" toc=""><h3 is-upgraded="" id="non-varint-numbers">Non-varint Numbers<button role="button" class="devsite-heading-link button-flat material-icons" data-title="Copy link to this section"></button></h3></devsite-heading>
+<p class="cye-lm-tag">Non-varint numeric types are simple – <code translate="no" dir="ltr">double</code> and <code translate="no" dir="ltr">fixed64</code> have wire type 1, which tells the parser to expect a fixed 64-bit lump of data; similarly <code translate="no" dir="ltr">float</code> and <code translate="no" dir="ltr">fixed32</code> have wire type 5, which tells it to expect 32 bits.  In both cases the values are stored in little-endian byte order.
+</p><devsite-heading text="Strings" for="strings" level="h3" link="" toc=""><h3 is-upgraded="" id="strings">Strings<button role="button" class="devsite-heading-link button-flat material-icons" data-title="Copy link to this section"></button></h3></devsite-heading>
+<p class="cye-lm-tag">A wire type of 2 (length-delimited) means that the value is a varint encoded length followed by the specified number of bytes of data.
+</p><devsite-code no-copy=""><pre translate="no" dir="ltr" is-upgraded="">message Test2 {
+  optional string b = 2;
+}</pre><div class="devsite-code-buttons-container"><button class="gc-analytics-event material-icons devsite-icon-code-dark devsite-toggle-dark" data-category="Site-Wide Custom Events" data-label="Dark Code Toggle" track-type="exampleCode" track-name="darkCodeToggle" data-title="Dark code theme"></button><button class="gc-analytics-event material-icons devsite-icon-code-light devsite-toggle-light" data-category="Site-Wide Custom Events" data-label="Light Code Toggle" track-type="exampleCode" track-name="lightCodeToggle" data-title="Light code theme"></button></div></devsite-code>
+<p class="cye-lm-tag">Setting the value of b to "testing" gives you:
+</p><devsite-code no-copy=""><pre translate="no" dir="ltr" is-upgraded="">12 07 <font color="red">74 65 73 74 69 6e 67</font></pre><div class="devsite-code-buttons-container"><button class="gc-analytics-event material-icons devsite-icon-code-dark devsite-toggle-dark" data-category="Site-Wide Custom Events" data-label="Dark Code Toggle" track-type="exampleCode" track-name="darkCodeToggle" data-title="Dark code theme"></button><button class="gc-analytics-event material-icons devsite-icon-code-light devsite-toggle-light" data-category="Site-Wide Custom Events" data-label="Light Code Toggle" track-type="exampleCode" track-name="lightCodeToggle" data-title="Light code theme"></button></div></devsite-code>
+<p class="cye-lm-tag">The red bytes are the UTF8 of "testing". The key here is 0x12 → field number = 2, type = 2. The length varint in the value is 7 and lo and behold, we find seven bytes following it – our string.
+</p><devsite-heading text="Embedded Messages" for="embedded" level="h2" link="" toc="" back-to-top=""><h2 id="embedded" is-upgraded="">Embedded Messages<button role="button" class="devsite-heading-link button-flat material-icons" data-title="Copy link to this section"></button><a href="https://developers.google.com/protocol-buffers/docs/encoding?csw=1#top_of_page" class="devsite-back-to-top-link material-icons" data-title="返回页首"></a></h2></devsite-heading>
+<p class="cye-lm-tag">Here's a message definition with an embedded message of our example type, Test1:
+</p><devsite-code no-copy=""><pre translate="no" dir="ltr" is-upgraded="">message Test3 {
+  optional Test1 c = 3;
+}</pre><div class="devsite-code-buttons-container"><button class="gc-analytics-event material-icons devsite-icon-code-dark devsite-toggle-dark" data-category="Site-Wide Custom Events" data-label="Dark Code Toggle" track-type="exampleCode" track-name="darkCodeToggle" data-title="Dark code theme"></button><button class="gc-analytics-event material-icons devsite-icon-code-light devsite-toggle-light" data-category="Site-Wide Custom Events" data-label="Light Code Toggle" track-type="exampleCode" track-name="lightCodeToggle" data-title="Light code theme"></button></div></devsite-code>
+<p class="cye-lm-tag">And here's the encoded version, again with the Test1's <code translate="no" dir="ltr">a</code> field set to 150:
+</p><devsite-code no-copy=""><pre translate="no" dir="ltr" is-upgraded=""> 1a 03 <font color="red">08 96 01</font></pre><div class="devsite-code-buttons-container"><button class="gc-analytics-event material-icons devsite-icon-code-dark devsite-toggle-dark" data-category="Site-Wide Custom Events" data-label="Dark Code Toggle" track-type="exampleCode" track-name="darkCodeToggle" data-title="Dark code theme"></button><button class="gc-analytics-event material-icons devsite-icon-code-light devsite-toggle-light" data-category="Site-Wide Custom Events" data-label="Light Code Toggle" track-type="exampleCode" track-name="lightCodeToggle" data-title="Light code theme"></button></div></devsite-code>
+<p class="cye-lm-tag">As you can see, the last three bytes are exactly the same as our first example (<code translate="no" dir="ltr">08 96 01</code>), and they're preceded by the number 3 – embedded messages are treated in exactly the same way as strings (wire type = 2).
+</p><devsite-heading text="Optional And Repeated Elements" for="optional" level="h2" link="" toc="" back-to-top=""><h2 id="optional" is-upgraded="">Optional And Repeated Elements<button role="button" class="devsite-heading-link button-flat material-icons" data-title="Copy link to this section"></button><a href="https://developers.google.com/protocol-buffers/docs/encoding?csw=1#top_of_page" class="devsite-back-to-top-link material-icons" data-title="返回页首"></a></h2></devsite-heading>
+<p class="cye-lm-tag">If a proto2 message definition has <code translate="no" dir="ltr">repeated</code> elements (without the <code translate="no" dir="ltr">[packed=true]</code> option), the encoded message has zero or more key-value pairs with the same field number.  These repeated values do not have to appear consecutively; they may be interleaved with other fields.  The order of the elements with respect to each other is preserved when parsing, though the ordering with respect to other fields is lost. In proto3, repeated fields use <a href="https://developers.google.com/protocol-buffers/docs/encoding?csw=1#packed">packed encoding</a>, which you can read about below.
+</p><p class="cye-lm-tag">For any non-repeated fields in proto3, or <code translate="no" dir="ltr">optional</code> fields in proto2, the encoded message may or may not have a key-value pair with that field number.
+</p><p class="cye-lm-tag">Normally, an encoded message would never have more than one instance of a non-repeated field.  However, parsers are expected to handle the case in which they do.  For numeric types and strings, if the same field appears multiple times, the parser accepts the <i>last</i> value it sees.  For embedded message fields, the parser merges multiple instances of the same field, as if with the <code translate="no" dir="ltr">Message::MergeFrom</code> method – that is, all singular scalar fields in the latter instance replace those in the former, singular embedded messages are merged, and repeated fields are concatenated.  The effect of these rules is that parsing the concatenation of two encoded messages produces exactly the same result as if you had parsed the two messages separately and merged the resulting objects.  That is, this:
+</p><devsite-code no-copy=""><pre translate="no" dir="ltr" is-upgraded="">MyMessage message;
+message.ParseFromString(str1 + str2);</pre><div class="devsite-code-buttons-container"><button class="gc-analytics-event material-icons devsite-icon-code-dark devsite-toggle-dark" data-category="Site-Wide Custom Events" data-label="Dark Code Toggle" track-type="exampleCode" track-name="darkCodeToggle" data-title="Dark code theme"></button><button class="gc-analytics-event material-icons devsite-icon-code-light devsite-toggle-light" data-category="Site-Wide Custom Events" data-label="Light Code Toggle" track-type="exampleCode" track-name="lightCodeToggle" data-title="Light code theme"></button></div></devsite-code>
+<p class="cye-lm-tag">is equivalent to this:
+</p><devsite-code no-copy=""><pre translate="no" dir="ltr" is-upgraded="">MyMessage message, message2;
+message.ParseFromString(str1);
+message2.ParseFromString(str2);
+message.MergeFrom(message2);</pre><div class="devsite-code-buttons-container"><button class="gc-analytics-event material-icons devsite-icon-code-dark devsite-toggle-dark" data-category="Site-Wide Custom Events" data-label="Dark Code Toggle" track-type="exampleCode" track-name="darkCodeToggle" data-title="Dark code theme"></button><button class="gc-analytics-event material-icons devsite-icon-code-light devsite-toggle-light" data-category="Site-Wide Custom Events" data-label="Light Code Toggle" track-type="exampleCode" track-name="lightCodeToggle" data-title="Light code theme"></button></div></devsite-code>
+<p class="cye-lm-tag">This property is occasionally useful, as it allows you to merge two messages even if you do not know their types.
+
+</p><devsite-heading text="Packed Repeated Fields" for="packed" level="h3" link="" toc=""><h3 id="packed" is-upgraded="">Packed Repeated Fields<button role="button" class="devsite-heading-link button-flat material-icons" data-title="Copy link to this section"></button></h3></devsite-heading>
+
+<p class="cye-lm-tag">Version 2.1.0 introduced packed repeated fields, which in proto2 are declared like repeated fields but with the special <code translate="no" dir="ltr">[packed=true]</code> option. In proto3, repeated fields of scalar numeric types are packed by default. These function like repeated fields, but are encoded differently.  A packed repeated field containing zero elements does not appear in the encoded message.  Otherwise, all of the elements of the field are packed into a single key-value pair with wire type 2 (length-delimited).  Each element is encoded the same way it would be normally, except without a key preceding it.
+
+</p><p class="cye-lm-tag">For example, imagine you have the message type:
+</p><devsite-code no-copy=""><pre translate="no" dir="ltr" is-upgraded="">message Test4 {
+  repeated int32 d = 4 [packed=true];
+}</pre><div class="devsite-code-buttons-container"><button class="gc-analytics-event material-icons devsite-icon-code-dark devsite-toggle-dark" data-category="Site-Wide Custom Events" data-label="Dark Code Toggle" track-type="exampleCode" track-name="darkCodeToggle" data-title="Dark code theme"></button><button class="gc-analytics-event material-icons devsite-icon-code-light devsite-toggle-light" data-category="Site-Wide Custom Events" data-label="Light Code Toggle" track-type="exampleCode" track-name="lightCodeToggle" data-title="Light code theme"></button></div></devsite-code>
+
+<p class="cye-lm-tag">Now let's say you construct a <code translate="no" dir="ltr">Test4</code>, providing the values 3, 270, and 86942 for the repeated field <code translate="no" dir="ltr">d</code>.  Then, the encoded form would be:
+</p><devsite-code no-copy=""><pre translate="no" dir="ltr" is-upgraded="">22        // key (field number 4, wire type 2)
+06        // payload size (6 bytes)
+03        // first element (varint 3)
+8E 02     // second element (varint 270)
+9E A7 05  // third element (varint 86942)</pre><div class="devsite-code-buttons-container"><button class="gc-analytics-event material-icons devsite-icon-code-dark devsite-toggle-dark" data-category="Site-Wide Custom Events" data-label="Dark Code Toggle" track-type="exampleCode" track-name="darkCodeToggle" data-title="Dark code theme"></button><button class="gc-analytics-event material-icons devsite-icon-code-light devsite-toggle-light" data-category="Site-Wide Custom Events" data-label="Light Code Toggle" track-type="exampleCode" track-name="lightCodeToggle" data-title="Light code theme"></button></div></devsite-code>
+
+<p class="cye-lm-tag">Only repeated fields of primitive numeric types (types which use the varint, 32-bit, or 64-bit wire types) can be declared "packed".</p>
+
+<p class="cye-lm-tag">Note that although there's usually no reason to encode more than one key-value pair for a packed repeated field, encoders must be prepared to accept multiple key-value pairs.  In this case, the payloads should be concatenated.  Each pair must contain a whole number of elements.
+
+</p><p class="cye-lm-tag">Protocol buffer parsers must be able to parse repeated fields that were compiled as <code translate="no" dir="ltr">packed</code>
+as if they were not packed, and vice versa. This permits adding <code translate="no" dir="ltr">[packed=true]</code> to existing fields
+in a forward- and backward-compatible way.</p>
+
+<devsite-heading text="Field Order" for="order" level="h2" link="" toc="" back-to-top=""><h2 id="order" is-upgraded="">Field Order<button role="button" class="devsite-heading-link button-flat material-icons" data-title="Copy link to this section"></button><a href="https://developers.google.com/protocol-buffers/docs/encoding?csw=1#top_of_page" class="devsite-back-to-top-link material-icons" data-title="返回页首"></a></h2></devsite-heading>
+<p class="cye-lm-tag">Field numbers may be used in any order in a <code translate="no" dir="ltr">.proto</code> file. The order chosen has no effect on how the messages are serialized.
+</p><p class="cye-lm-tag">When a message is serialized, there is no guaranteed order for how its known or <a href="https://developers.google.com/protocol-buffers/docs/proto.html#updating">unknown fields</a> should be written.
+Serialization order is an implementation detail and the details of any particular implementation may change in the future. Therefore, protocol buffer parsers must be able to parse fields in any order.
+</p><devsite-heading text="Implications" for="implications" level="h3" link="" toc=""><h3 is-upgraded="" id="implications">Implications<button role="button" class="devsite-heading-link button-flat material-icons" data-title="Copy link to this section"></button></h3></devsite-heading>
+<ul>
+<li>Do not assume the byte output of a serialized message is stable. This is especially true for messages with transitive bytes fields representing other serialized protocol buffer messages.
+</li><li>By default, repeated invocations of serialization methods on the same protocol buffer message instance may not return the same byte output; i.e. the default serialization is not deterministic.
+  <ul>
+  <li>Deterministic serialization only guarantees the same byte output for a particular binary. The byte output may change across different versions of the binary.
+  </li></ul>
+</li><li>The following checks may fail for a protocol buffer message instance <code translate="no" dir="ltr">foo</code>.
+  <ul>
+  <li><code translate="no" dir="ltr">foo.SerializeAsString() == foo.SerializeAsString()</code>
+  </li><li><code translate="no" dir="ltr">Hash(foo.SerializeAsString()) == Hash(foo.SerializeAsString())</code>
+  </li><li><code translate="no" dir="ltr">CRC(foo.SerializeAsString()) == CRC(foo.SerializeAsString())</code>
+  </li><li><code translate="no" dir="ltr">FingerPrint(foo.SerializeAsString()) == FingerPrint(foo.SerializeAsString())</code>
+  </li></ul>
+</li><li>Here're a few example scenarios where logically equivalent protocol buffer messages <code translate="no" dir="ltr">foo</code> and <code translate="no" dir="ltr">bar</code> may serialize to different byte outputs.
+  <ul>
+  <li><code translate="no" dir="ltr">bar</code> is serialized by an old server that treats some fields as unknown.
+  </li><li><code translate="no" dir="ltr">bar</code> is serialized by a server that is implemented in a different programming language and serializes fields in different order.
+  </li><li><code translate="no" dir="ltr">bar</code> has a field that serializes in non-deterministic manner.
+  </li><li><code translate="no" dir="ltr">bar</code> has a field that stores a serialized byte output of a protocol buffer message which is serialized differently.
+  </li><li><code translate="no" dir="ltr">bar</code> is serialized by a new server that serializes fields in different order due to an implementation change.
+  </li><li>Both <code translate="no" dir="ltr">foo</code> and <code translate="no" dir="ltr">bar</code> are concatenation of individual messages but with different order.
+  </li></ul>
+</li></ul>
+  
+          </div>
+
+    
+                   <devsite-page-rating position="footer" selected-rating="0" hover-rating-star="0">
+         <div><div class="devsite-rating-caption">Was this page helpful?</div><div class="devsite-rating-stars"><div class="devsite-rating-star devsite-rating-star-outline gc-analytics-event material-icons" data-rating-val="1" role="button" data-title="文档根本没法用" aria-label="Site content star ratings, rating 1 out of 5"></div><div class="devsite-rating-star devsite-rating-star-outline gc-analytics-event material-icons" data-rating-val="2" role="button" data-title="文档水平很差" aria-label="Site content star ratings, rating 2 out of 5"></div><div class="devsite-rating-star devsite-rating-star-outline gc-analytics-event material-icons" data-rating-val="3" role="button" data-title="文档水平一般" aria-label="Site content star ratings, rating 3 out of 5"></div><div class="devsite-rating-star devsite-rating-star-outline gc-analytics-event material-icons" data-rating-val="4" role="button" data-title="文档不错" aria-label="Site content star ratings, rating 4 out of 5"></div><div class="devsite-rating-star devsite-rating-star-outline gc-analytics-event material-icons" data-rating-val="5" role="button" data-title="文档写得很好" aria-label="Site content star ratings, rating 5 out of 5"></div></div><div class="devsite-rating-internal"><span class="devsite-rating-stats cye-lm-tag"></span></div></div></devsite-page-rating>
+                   
+          </article>
+</article>
+
+<devsite-content-footer class="nocontent">
+  <p class="cye-lm-tag">Except as otherwise noted, the content of this page is licensed under the <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 License</a>, and code samples are licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 License</a>. For details, see the <a href="https://developers.google.com/site-policies">Google Developers Site Policies</a>. Java is a registered trademark of Oracle and/or its affiliates.</p>
+</devsite-content-footer>
+
+
+                      </devsite-content>
+        </div>
+        <devsite-footer-promos class="devsite-footer">
+                      <nav>
+  <ul class="devsite-footer-promos-list">
+        <li class="devsite-footer-promo">
+      <a href="https://developers.google.com/protocol-buffers/docs/downloads" class="devsite-footer-promo-title gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Content Page Footer Promo">
+                        <div class="devsite-footer-promo-icon material-icons" aria-hidden="true">file_download</div>
+                Downloads
+      </a>
+      <div class="devsite-footer-promo-description">Protocol buffers downloads and instructions</div>
+    </li>
+        <li class="devsite-footer-promo">
+      <a href="https://github.com/protocolbuffers/protobuf/releases" class="devsite-footer-promo-title gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Content Page Footer Promo">
+                        <img class="devsite-footer-promo-icon" src="./Encoding  _  Protocol Buffers  _  Google Developers_files/logo-github.svg" alt="GitHub">
+                GitHub
+      </a>
+      <div class="devsite-footer-promo-description">The latest protocol buffers code and releases</div>
+    </li>
+      </ul>
+</nav>
+
+                  </devsite-footer-promos>
+        <devsite-footer-linkboxes class="devsite-footer">
+                      <nav class="devsite-footer-linkboxes nocontent">
+  <ul class="devsite-footer-linkboxes-list">
+        <li class="devsite-footer-linkbox ">
+    <h3 class="devsite-footer-linkbox-heading">关注</h3>      <ul class="devsite-footer-linkbox-list">
+                <li class="devsite-footer-linkbox-item">
+          <a href="http://developers.googleblog.cn/" class="devsite-footer-linkbox-link
+                    gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Footer Link (index 1)">
+            博客
+          </a>
+        </li>
+                <li class="devsite-footer-linkbox-item">
+          <a href="https://www.facebook.com/Google-Developers-967415219957038" class="devsite-footer-linkbox-link
+                    gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Footer Link (index 2)">
+            Facebook
+          </a>
+        </li>
+                <li class="devsite-footer-linkbox-item">
+          <a href="https://medium.com/google-developers" class="devsite-footer-linkbox-link
+                    gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Footer Link (index 3)">
+            Medium
+          </a>
+        </li>
+                <li class="devsite-footer-linkbox-item">
+          <a href="https://twitter.com/googledevs" class="devsite-footer-linkbox-link
+                    gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Footer Link (index 4)">
+            Twitter
+          </a>
+        </li>
+                <li class="devsite-footer-linkbox-item">
+          <a href="https://www.youtube.com/channel/UCQqa5UIHtrnpiADC3eHFupw" class="devsite-footer-linkbox-link
+                    gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Footer Link (index 5)">
+            YouTube
+          </a>
+        </li>
+              </ul>
+    </li>
+        <li class="devsite-footer-linkbox ">
+    <h3 class="devsite-footer-linkbox-heading">计划</h3>      <ul class="devsite-footer-linkbox-list">
+                <li class="devsite-footer-linkbox-item">
+          <a href="https://www.womentechmakers.com/" class="devsite-footer-linkbox-link
+                    gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Footer Link (index 1)">
+            Women Techmakers
+          </a>
+        </li>
+                <li class="devsite-footer-linkbox-item">
+          <a href="https://developers.google.com/community/gbg" class="devsite-footer-linkbox-link
+                    gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Footer Link (index 2)">
+            Google Business Groups
+          </a>
+        </li>
+                <li class="devsite-footer-linkbox-item">
+          <a href="https://developers.google.com/community/gdg" class="devsite-footer-linkbox-link
+                    gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Footer Link (index 3)">
+            Google Developer Groups
+          </a>
+        </li>
+                <li class="devsite-footer-linkbox-item">
+          <a href="https://developers.google.com/community/experts" class="devsite-footer-linkbox-link
+                    gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Footer Link (index 4)">
+            Google Developers Experts
+          </a>
+        </li>
+                <li class="devsite-footer-linkbox-item">
+          <a href="https://developers.google.com/community/launchpad" class="devsite-footer-linkbox-link
+                    gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Footer Link (index 5)">
+            Launchpad
+          </a>
+        </li>
+                <li class="devsite-footer-linkbox-item">
+          <a href="https://developers.google.com/community/dsc" class="devsite-footer-linkbox-link
+                    gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Footer Link (index 6)">
+            Developer Student Clubs
+          </a>
+        </li>
+              </ul>
+    </li>
+        <li class="devsite-footer-linkbox ">
+    <h3 class="devsite-footer-linkbox-heading">开发者控制台</h3>      <ul class="devsite-footer-linkbox-list">
+                <li class="devsite-footer-linkbox-item">
+          <a href="https://console.developers.google.com/" class="devsite-footer-linkbox-link
+                    gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Footer Link (index 1)">
+            Google API Console
+          </a>
+        </li>
+                <li class="devsite-footer-linkbox-item">
+          <a href="https://console.cloud.google.com/" class="devsite-footer-linkbox-link
+                    gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Footer Link (index 2)">
+            Google Cloud Platform Console
+          </a>
+        </li>
+                <li class="devsite-footer-linkbox-item">
+          <a href="https://play.google.com/apps/publish" class="devsite-footer-linkbox-link
+                    gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Footer Link (index 3)">
+            Google Play 管理中心
+          </a>
+        </li>
+                <li class="devsite-footer-linkbox-item">
+          <a href="https://console.firebase.google.com/" class="devsite-footer-linkbox-link
+                    gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Footer Link (index 4)">
+            Firebase Console
+          </a>
+        </li>
+                <li class="devsite-footer-linkbox-item">
+          <a href="https://console.actions.google.com/" class="devsite-footer-linkbox-link
+                    gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Footer Link (index 5)">
+            Actions on Google Console
+          </a>
+        </li>
+                <li class="devsite-footer-linkbox-item">
+          <a href="https://cast.google.com/publish" class="devsite-footer-linkbox-link
+                    gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Footer Link (index 6)">
+            Cast SDK Developer Console
+          </a>
+        </li>
+                <li class="devsite-footer-linkbox-item">
+          <a href="https://chrome.google.com/webstore/developer/dashboard" class="devsite-footer-linkbox-link
+                    gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Footer Link (index 7)">
+            Chrome Web Store Dashboard
+          </a>
+        </li>
+              </ul>
+    </li>
+      </ul>
+</nav>
+                  </devsite-footer-linkboxes>
+        <devsite-footer-utility class="devsite-footer">
+                      
+<div class="devsite-footer-utility">
+    <nav class="devsite-nav devsite-footer-sites">
+    <a href="https://developers.google.com/" class="devsite-footer-sites-logo-link gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Footer Google Developers Link">
+      <img class="devsite-footer-sites-logo" src="./Encoding  _  Protocol Buffers  _  Google Developers_files/lockup-color.png" alt="Google Developers">
+    </a>
+    <ul class="devsite-footer-sites-list">
+            <li class="devsite-footer-sites-item">
+        <a href="https://developer.android.com/" class="devsite-footer-sites-link
+                  gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Footer Android Link">
+          Android
+        </a>
+      </li>
+            <li class="devsite-footer-sites-item">
+        <a href="https://developer.chrome.com/home" class="devsite-footer-sites-link
+                  gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Footer Chrome Link">
+          Chrome
+        </a>
+      </li>
+            <li class="devsite-footer-sites-item">
+        <a href="https://firebase.google.com/" class="devsite-footer-sites-link
+                  gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Footer Firebase Link">
+          Firebase
+        </a>
+      </li>
+            <li class="devsite-footer-sites-item">
+        <a href="https://cloud.google.com/" class="devsite-footer-sites-link
+                  gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Footer Google Cloud Platform Link">
+          Google Cloud Platform
+        </a>
+      </li>
+            <li class="devsite-footer-sites-item">
+        <a href="https://developers.google.com/products" class="devsite-footer-sites-link
+                  gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Footer All products Link">
+          所有产品
+        </a>
+      </li>
+          </ul>
+  </nav>
+  
+  <nav class="devsite-nav">
+        <ul class="devsite-footer-utility-list">
+            <li class="devsite-footer-utility-item
+                 ">
+                        <a class="devsite-footer-utility-link
+                  gc-analytics-event" href="https://developers.google.com/terms/site-terms" data-category="Site-Wide Custom Events" data-label="Footer Terms link">
+          条款
+        </a>
+              </li>
+            <li class="devsite-footer-utility-item
+                 ">
+                        <a class="devsite-footer-utility-link
+                  gc-analytics-event" href="https://policies.google.com/privacy" data-category="Site-Wide Custom Events" data-label="Footer Privacy link">
+          隐私权政策
+        </a>
+              </li>
+            <li class="devsite-footer-utility-item
+                 devsite-footer-utility-button">
+                <span class="devsite-footer-utility-description cye-lm-tag">订阅 Google Developers 简报</span>
+                        <a class="devsite-footer-utility-link
+                  gc-analytics-event" href="https://services.google.com/fb/forms/googledevelopersnewsletter/?utm_medium=referral&amp;utm_source=google-products&amp;utm_team=googledevs&amp;utm_campaign=201611-newsletter-launch" data-category="Site-Wide Custom Events" data-label="Footer Subscribe link">
+          订阅
+        </a>
+              </li>
+          </ul>
+    
+    <devsite-language-selector>
+  <devsite-select class="devsite-language-selector-menu">
+    <select class="devsite-language-selector-select" name="language" track-name="click" track-type="languageSelector">
+                <option>Language</option>
+              <option value="id" track-metadata-original-language="zh_cn" track-metadata-selected-language="id" track-name="changed" track-type="languageSelector">
+        Bahasa Indonesia
+      </option>
+          <option value="de" track-metadata-original-language="zh_cn" track-metadata-selected-language="de" track-name="changed" track-type="languageSelector">
+        Deutsch
+      </option>
+          <option value="en" track-metadata-original-language="zh_cn" track-metadata-selected-language="en" track-name="changed" track-type="languageSelector">
+        English
+      </option>
+          <option value="es" track-metadata-original-language="zh_cn" track-metadata-selected-language="es" track-name="changed" track-type="languageSelector">
+        Español
+      </option>
+          <option value="fr" track-metadata-original-language="zh_cn" track-metadata-selected-language="fr" track-name="changed" track-type="languageSelector">
+        Français
+      </option>
+          <option value="pt_br" track-metadata-original-language="zh_cn" track-metadata-selected-language="pt_br" track-name="changed" track-type="languageSelector">
+        Português – Brasil
+      </option>
+          <option value="ru" track-metadata-original-language="zh_cn" track-metadata-selected-language="ru" track-name="changed" track-type="languageSelector">
+        Русский
+      </option>
+          <option value="zh_cn" track-metadata-original-language="zh_cn" track-metadata-selected-language="zh_cn" track-name="changed" track-type="languageSelector">
+        中文 – 简体
+      </option>
+          <option value="ja" track-metadata-original-language="zh_cn" track-metadata-selected-language="ja" track-name="changed" track-type="languageSelector">
+        日本語
+      </option>
+          <option value="ko" track-metadata-original-language="zh_cn" track-metadata-selected-language="ko" track-name="changed" track-type="languageSelector">
+        한국어
+      </option>
+        </select>
+  <div class="devsite-select"><button class="devsite-select-toggle">Language</button><ul class="devsite-select-list" scrollbars=""><li class="devsite-select-item" data-index="0">Language</li><li class="devsite-select-item" data-index="1">Bahasa Indonesia</li><li class="devsite-select-item" data-index="2">Deutsch</li><li class="devsite-select-item" data-index="3">English</li><li class="devsite-select-item" data-index="4">Español</li><li class="devsite-select-item" data-index="5">Français</li><li class="devsite-select-item" data-index="6">Português – Brasil</li><li class="devsite-select-item" data-index="7">Русский</li><li class="devsite-select-item" data-index="8">中文 – 简体</li><li class="devsite-select-item" data-index="9">日本語</li><li class="devsite-select-item" data-index="10">한국어</li></ul></div></devsite-select>
+</devsite-language-selector>
+
+  </nav>
+</div>
+                  </devsite-footer-utility>
+      </div></div>
+    <devsite-sitemask></devsite-sitemask>
+    <devsite-snackbar></devsite-snackbar>    <devsite-tooltip></devsite-tooltip>
+    <devsite-analytics>
+              <script async="" src="./Encoding  _  Protocol Buffers  _  Google Developers_files/app_loader.js.下载"></script><script type="application/json" analytics="">[{"metrics": {"ratings_value": "metric1", "ratings_count": "metric2"}, "dimensions": {"dimension6": "en", "dimension4": "Protocol Buffers", "dimension5": "zh-cn", "dimension3": false, "dimension1": "Signed In", "dimension8": null}, "gaid": "UA-24532603-1"}]</script>
+<script type="application/json" gtm="">[]</script>
+          </devsite-analytics>
+        <script>
+    (function(d,e,v,s,i,t,E){d['GoogleDevelopersObject']=i;
+    t=e.createElement(v);t.async=1;t.src=s;E=e.getElementsByTagName(v)[0];
+    E.parentNode.insertBefore(t,E);})(window, document, 'script',
+    'https://www.gstatic.com/devrel-devsite/v45ff8f523b59dba1a68309c845322ac9e5fdaa00274f34f2986d46556e823992/js/app_loader.js', '[1,"zh_cn",null,"/js/devsite_app.js","https://www.gstatic.com/devrel-devsite/v45ff8f523b59dba1a68309c845322ac9e5fdaa00274f34f2986d46556e823992","https://www.gstatic.com/devrel-devsite/v45ff8f523b59dba1a68309c845322ac9e5fdaa00274f34f2986d46556e823992/developers","https://developers-dot-devsite-v2-prod.appspot.com",null,null,["/_pwa/developers/manifest.json","/_static/images/video-placeholder.svg","https://www.gstatic.com/devrel-devsite/v45ff8f523b59dba1a68309c845322ac9e5fdaa00274f34f2986d46556e823992/developers/images/favicon.png","https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:400,400italic,500,500italic,700,700italic|Roboto+Mono:400,500,700|Material+Icons"]]')
+  </script>  
+</body><div id="cyeBlackMaskLayer" style="background-color: rgb(19, 19, 19); position: fixed; width: 1980px; height: 1080px; z-index: -2147483648;"></div><div id="cye-workaround-body" style="position: absolute; left: 0px; top: 0px; z-index: -2147483646; background: none 0% 0% / auto repeat scroll padding-box border-box rgb(232, 234, 237); height: 9933px; width: 1719px;"></div><div id="cye-workaround-body-image" style="position: absolute; left: 0px; top: 0px; z-index: -2147483645; background: none 0% 0% / auto repeat scroll padding-box border-box rgba(0, 0, 0, 0); height: 9933px; width: 1719px;"></div></html>
