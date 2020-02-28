@@ -1,0 +1,13 @@
+tar -xzvf  xxx
+mkdir redis
+mv redis-linuxxxx redis/
+
+yum install gcc-c++
+make MALLOC=libc
+
+
+cd src/
+
+make install
+
+
